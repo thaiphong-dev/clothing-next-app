@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import logo1 from "./../../../public/images/icons/logo-01.png";
 import iconClose2 from "./../../../public/images/icons/icon-close2.png";
 export default function Header() {
@@ -11,9 +11,11 @@ export default function Header() {
       setScroll("wrap-menu-desktop");
     }
   };
+
   React.useEffect(() => {
     window.addEventListener("scroll", scrolled);
   });
+  
   return (
     <div>
       <header>

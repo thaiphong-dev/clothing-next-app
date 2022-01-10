@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import logo1 from "./../../../public/images/icons/logo-01.png";
 import iconClose2 from "./../../../public/images/icons/icon-close2.png";
+import Link from "next/link";
+
 export default function Header() {
   const [scroll, setScroll] = useState("wrap-menu-desktop");
   const scrolled = () => {
@@ -59,38 +61,25 @@ export default function Header() {
               <div className="menu-desktop">
                 <ul className="main-menu">
                   <li className="active-menu">
-                    <a href="index.html">Home</a>
-                    <ul className="sub-menu">
-                      <li>
-                        <a href="index.html">Homepage 1</a>
-                      </li>
-                      <li>
-                        <a href="home-02.html">Homepage 2</a>
-                      </li>
-                      <li>
-                        <a href="home-03.html">Homepage 3</a>
-                      </li>
-                    </ul>
+                    <a href="index.html" refresh="true">Home</a>
                   </li>
-
                   <li>
-                    <a href="product.html">Shop</a>
+                    <Link href="/shop">Shop</Link>
                   </li>
-
                   <li className="label1" data-label1="hot">
-                    <a href="shoping-cart.html">Features</a>
+                    <Link href="/features">Features</Link>
                   </li>
 
                   <li>
-                    <a href="blog.html">Blog</a>
+                    <Link href="/blog">Blog</Link>
                   </li>
 
                   <li>
-                    <a href="about.html">About</a>
+                    <Link href="/about">About</Link>
                   </li>
 
                   <li>
-                    <a href="contact.html">Contact</a>
+                    <Link href="/contact">Contact</Link>
                   </li>
                 </ul>
               </div>
@@ -98,7 +87,7 @@ export default function Header() {
               {/* <!-- Icon header --> */}
               <div className="wrap-icon-header flex-w flex-r-m">
                 <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-                  <i className="zmdi zmdi-search"></i>
+                <i className="zmdi zmdi-account"></i>
                 </div>
 
                 <div

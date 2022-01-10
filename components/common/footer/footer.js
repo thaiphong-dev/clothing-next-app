@@ -143,7 +143,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <p className="stext-107 cl6 txt-center" id="year">
+            <p className="stext-107 cl6 txt-center">
               Copyright &copy;
               {year} All
               rights reserved | Made with{" "}

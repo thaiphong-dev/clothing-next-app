@@ -116,9 +116,11 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 /* Footer */
 footer{
-  bottom: 0px;
-  position: absolute;
   width: 100%;
+}
+
+.page-footer{
+  padding-left: 0px;
 }
 
 

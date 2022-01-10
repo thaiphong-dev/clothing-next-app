@@ -114,7 +114,12 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .slick-slide {outline: none !important;}
 
 
-
+/* Footer */
+footer{
+  bottom: 0px;
+  position: absolute;
+  width: 100%;
+}
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -199,6 +204,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 [ Header Desktop ]*/
 
 .container-menu-desktop {
+  top: 0;
   height: auto;
   width: 100%;
   position: relative;
@@ -270,7 +276,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 [ Menu ]*/
 
 .wrap-menu-desktop {
-  position: fixed;
   z-index: 1100;
   background-color: transparent;
   width: 100%;
@@ -285,6 +290,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .wrap-menu-desktop.active{
+  position: fixed;
   z-index: 1100;
   height: 70px;
   top: 0px;

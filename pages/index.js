@@ -5,9 +5,7 @@ import Slider from "../components/common/slider/slider";
 export default function Home() {
   return (
     <div>
-      <Header />
       <Slider />
-      <Footer />
     </div>
   );
 }

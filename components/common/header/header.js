@@ -14,9 +14,9 @@ export default function Header() {
     }
   };
 
-  React.useEffect(() => {
-    window.addEventListener("scroll", scrolled);
-  });
+  // React.useEffect(() => {
+  //   window.addEventListener("scroll", scrolled);
+  // });
   
   return (
     <div>
@@ -36,7 +36,7 @@ export default function Header() {
               <div className="menu-desktop">
                 <ul className="main-menu">
                   <li className="active-menu">
-                    <a href="index.html" refresh="true">Home</a>
+                    <Link href="/" refresh="true">Home</Link>
                   </li>
                   <li>
                     <Link href="/shop">Shop</Link>

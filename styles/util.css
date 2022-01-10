@@ -3395,6 +3395,7 @@ iframe {border: none;}
 	justify-content: center;
 	-ms-align-items: center;
 	align-items: center;
+	cursor: pointer;
 }
 
 .flex-c-t {

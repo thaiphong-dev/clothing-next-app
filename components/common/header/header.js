@@ -14,10 +14,10 @@ export default function Header() {
     }
   };
 
-  // React.useEffect(() => {
-  //   window.addEventListener("scroll", scrolled);
-  // });
-  
+  React.useEffect(() => {
+    window.addEventListener("scroll", scrolled);
+  });
+
   return (
     <div>
       <header>
@@ -36,7 +36,9 @@ export default function Header() {
               <div className="menu-desktop">
                 <ul className="main-menu">
                   <li className="active-menu">
-                    <Link href="/" refresh="true">Home</Link>
+                    <Link href="/" refresh="true">
+                      Home
+                    </Link>
                   </li>
                   <li>
                     <Link href="/shop">Shop</Link>
@@ -62,7 +64,7 @@ export default function Header() {
               {/* <!-- Icon header --> */}
               <div className="wrap-icon-header flex-w flex-r-m">
                 <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-                <i className="zmdi zmdi-account"></i>
+                  <i className="zmdi zmdi-account"></i>
                 </div>
 
                 <div

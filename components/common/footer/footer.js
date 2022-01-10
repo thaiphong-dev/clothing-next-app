@@ -1,23 +1,16 @@
 import React from "react";
-import Image from "next/image";
-import iPay1 from "./../../../public/images/icons/icon-pay-01.png";
-import iPay2 from "./../../../public/images/icons/icon-pay-02.png";
-import iPay3 from "./../../../public/images/icons/icon-pay-03.png";
-import iPay4 from "./../../../public/images/icons/icon-pay-04.png";
-import iPay5 from "./../../../public/images/icons/icon-pay-05.png";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <div>
-      {" "}
       <footer className="bg3 p-t-75 p-b-32">
         <div className="container">
           <div className="row">
             <div className="col-sm-6 col-lg-3 p-b-50">
               <h4 className="stext-301 cl0 p-b-30">Categories</h4>
 
-              <ul>
+              <ul className="page-footer">
                 <li className="p-b-10">
                   <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
                     Women
@@ -47,7 +40,7 @@ export default function Footer() {
             <div className="col-sm-6 col-lg-3 p-b-50">
               <h4 className="stext-301 cl0 p-b-30">Help</h4>
 
-              <ul>
+              <ul className="page-footer">
                 <li className="p-b-10">
                   <a href="#" className="stext-107 cl7 hov-cl1 trans-04">
                     Track Order

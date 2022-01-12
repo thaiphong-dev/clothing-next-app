@@ -123,6 +123,12 @@ footer{
   padding-left: 0px;
 }
 
+.banner-title{
+  display: flex;
+  position: absolute;
+  padding: 34px 38px;
+}
+
 
 /*//////////////////////////////////////////////////////////////////
 [ LOADDING ]*/
@@ -1998,6 +2004,7 @@ input.num-product::-webkit-inner-spin-button {
 .block1 {
   position: relative;
   border: 1px solid #e6e6e6;
+  cursor: pointer;
 }
 
 .block1-txt {

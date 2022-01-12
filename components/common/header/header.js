@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Header() {
   const [scroll, setScroll] = useState("wrap-menu-desktop");
   const scrolled = () => {
-    if (window.pageYOffset > 40) {
+    if (window.pageYOffset > 85) {
       setScroll("wrap-menu-desktop active");
     } else {
       setScroll("wrap-menu-desktop");
@@ -36,27 +36,27 @@ export default function Header() {
               <div className="menu-desktop">
                 <ul className="main-menu">
                   <li className="active-menu">
-                    <Link href="/" refresh="true">
+                    <Link href="/" passHref>
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href="/shop">Shop</Link>
+                    <Link href="/shop" passHref>Shop</Link>
                   </li>
                   <li className="label1" data-label1="hot">
                     <Link href="/features">Features</Link>
                   </li>
 
                   <li>
-                    <Link href="/blog">Blog</Link>
+                    <Link href="/blog" passHref>Blog</Link>
                   </li>
 
                   <li>
-                    <Link href="/about">About</Link>
+                    <Link href="/about" passHref>About</Link>
                   </li>
 
                   <li>
-                    <Link href="/contact">Contact</Link>
+                    <Link href="/contact" passHref>Contact</Link>
                   </li>
                 </ul>
               </div>

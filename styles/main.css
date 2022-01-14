@@ -129,6 +129,20 @@ footer{
   padding: 34px 38px;
 }
 
+.block2-pic img.ishover{
+  transition: transform .3s;
+  transform: scale(1.2);
+}
+
+.block2-pic img{
+  transition: transform .3s;
+  transform: scale(1);
+}
+
+.block2-txt{
+  position: relative;
+  background: white;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ LOADDING ]*/

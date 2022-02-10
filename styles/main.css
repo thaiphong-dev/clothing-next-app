@@ -144,6 +144,14 @@ footer{
   background: white;
 }
 
+.hov-btn3 .zmdi-close {
+  display: none;
+}
+
+
+.show-filter .icon-close-filter{
+  display: unset;
+}
 /*//////////////////////////////////////////////////////////////////
 [ LOADDING ]*/
 .animsition-loading-1 {
@@ -198,6 +206,10 @@ footer{
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+}
+
+.btn-back-to-top.active{
+  display: flex;
 }
 
 .symbol-btn-back-to-top {
@@ -1733,7 +1745,7 @@ button.mfp-close {
 .show-filter .icon-filter {display: none;}
 
 .show-search .icon-close-search,
-.show-filter .icon-close-filter {display: unset;}
+.show-filter {display: unset;}
 
 .show-search,
 .show-filter {

@@ -6,15 +6,58 @@ import iconHeart2 from "./../../../public/images/icons/icon-heart-02.png";
 import Link from "next/link";
 
 const Product = () => {
-  const [indexh, setindexh] = useState("");
-  const [hv, sethv] = useState(false);
+  const [indexhv, setindehv] = useState("");
+  const [ishover, setishover] = useState(false);
+  const [isfilter, setisfilter] = useState(false);
+  const [isSearch, setisSearch] = useState(false);
+  const [indexTagFilter, setIndexTagFilter] = useState(0);
+
   const hoverImg = (index) => {
-    sethv(true);
-    setindexh(index);
+    setishover(true);
+    setindehv(index);
   };
   const unhoverImg = (index) => {
-    sethv(false);
-    setindexh(index);
+    setishover(false);
+    setindehv(index);
+  };
+
+  const filter = () => {
+    if (isSearch && !isfilter) {
+      setisSearch(!isSearch);
+      setisfilter(!isfilter);
+    }else{
+      setisfilter(!isfilter);
+    }
+  };
+
+  const search = () => {
+    if(isfilter && !isSearch){
+      setisfilter(!isfilter);
+      setisSearch(!isSearch);
+    }else{
+      setisSearch(!isSearch);
+    }
+    
+  };
+
+  var classFilter = () => {
+    return `flex-c-m
+      stext-106
+      cl6
+      size-104
+      bor4
+      pointer
+      hov-btn3
+      trans-04
+      m-r-8 m-tb-4
+      js-show-filter ${isfilter ? "show-filter" : ""}`;
+  };
+
+  var classSearch = () => {
+    return `
+    flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search
+      ${isSearch ? "show-search" : ""}
+    `;
   };
 
   const productItems = [
@@ -22,130 +65,139 @@ const Product = () => {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
       price: "$16,64",
-      icon1: iconHeart1,
-      icon2: iconHeart2,
-      btn: "Quick View"
-    }
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Quick View",
+    },
+  ];
+
+  const tagsFilter = [
+    { tag: "All Products", datafilter: "*" },
+    { tag: "Women", datafilter: "women" },
+    { tag: "Men", datafilter: "men" },
+    { tag: "Bag", datafilter: "bag" },
+    { tag: "Shoes", datafilter: "shoes" },
+    { tag: "Watches", datafilter: "watches" },
   ];
 
   return (
@@ -154,67 +206,27 @@ const Product = () => {
         <div className="p-b-10">
           <h3 className="ltext-103 cl5">Product Overview</h3>
         </div>
-
         <div className="flex-w flex-sb-m p-b-52">
           <div className="flex-w flex-l-m filter-tope-group m-tb-10">
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
-              data-filter="*"
-            >
-              All Products
-            </button>
-
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".women"
-            >
-              Women
-            </button>
-
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".men"
-            >
-              Men
-            </button>
-
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".bag"
-            >
-              Bag
-            </button>
-
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".shoes"
-            >
-              Shoes
-            </button>
-
-            <button
-              className="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-              data-filter=".watches"
-            >
-              Watches
-            </button>
+            {tagsFilter.map((item, index) => (
+              <button
+                className={
+                  indexTagFilter == index
+                    ? "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
+                    : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+                }
+                data-filter={item.datafilter}
+                key={index}
+                onClick={() => {
+                  setIndexTagFilter(index);
+                }}
+              >
+                {item.tag}
+              </button>
+            ))}
           </div>
-
           <div className="flex-w flex-c-m m-tb-10">
-            <div
-              className="
-                flex-c-m
-                stext-106
-                cl6
-                size-104
-                bor4
-                pointer
-                hov-btn3
-                trans-04
-                m-r-8 m-tb-4
-                js-show-filter
-              "
-            >
+            <div className={classFilter()} onClick={filter}>
               <i
                 className="
                   icon-filter
@@ -226,33 +238,17 @@ const Product = () => {
                 "
               ></i>
               <i
-                className="
-                  icon-close-filter
+                className="icon-close-filter
                   cl2
                   m-r-6
                   fs-15
                   trans-04
                   zmdi zmdi-close
-                  dis-none
-                "
+                  dis-none"
               ></i>
               Filter
             </div>
-
-            <div
-              className="
-                flex-c-m
-                stext-106
-                cl6
-                size-105
-                bor4
-                pointer
-                hov-btn3
-                trans-04
-                m-tb-4
-                js-show-search
-              "
-            >
+            <div className={classSearch()} onClick={search}>
               <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
               <i
                 className="
@@ -268,7 +264,6 @@ const Product = () => {
               Search
             </div>
           </div>
-
           {/* <!-- Search product --> */}
           <div className="dis-none panel-search w-full p-t-10 p-b-15">
             <div className="bor8 dis-flex p-l-15">
@@ -284,32 +279,27 @@ const Product = () => {
               />
             </div>
           </div>
-
           {/* <!-- Filter --> */}
           <div className="dis-none panel-filter w-full p-t-10">
             <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
               <div className="filter-col1 p-r-15 p-b-27">
                 <div className="mtext-102 cl2 p-b-15">Sort By</div>
-
                 <ul>
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       Default
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       Popularity
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       Average rating
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a
                       href="#"
@@ -318,7 +308,6 @@ const Product = () => {
                       Newness
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       Price: Low to High
@@ -332,10 +321,8 @@ const Product = () => {
                   </li>
                 </ul>
               </div>
-
               <div className="filter-col2 p-r-15 p-b-27">
                 <div className="mtext-102 cl2 p-b-15">Price</div>
-
                 <ul>
                   <li className="p-b-6">
                     <a
@@ -345,31 +332,26 @@ const Product = () => {
                       All
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       $0.00 - $50.00
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       $50.00 - $100.00
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       $100.00 - $150.00
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       $150.00 - $200.00
                     </a>
                   </li>
-
                   <li className="p-b-6">
                     <a href="#" className="filter-link stext-106 trans-04">
                       $200.00+
@@ -377,10 +359,8 @@ const Product = () => {
                   </li>
                 </ul>
               </div>
-
               <div className="filter-col4 p-b-27">
                 <div className="mtext-102 cl2 p-b-15">Tags</div>
-
                 <div className="flex-w p-t-4 m-r--5">
                   <a
                     href="#"
@@ -398,7 +378,6 @@ const Product = () => {
                   >
                     Fashion
                   </a>
-
                   <a
                     href="#"
                     className="
@@ -415,7 +394,6 @@ const Product = () => {
                   >
                     Lifestyle
                   </a>
-
                   <a
                     href="#"
                     className="
@@ -432,7 +410,6 @@ const Product = () => {
                   >
                     Denim
                   </a>
-
                   <a
                     href="#"
                     className="
@@ -449,7 +426,6 @@ const Product = () => {
                   >
                     Streetstyle
                   </a>
-
                   <a
                     href="#"
                     className="
@@ -471,7 +447,6 @@ const Product = () => {
             </div>
           </div>
         </div>
-
         <div className="row isotope-grid">
           {productItems.map((item, index) => (
             <div
@@ -485,11 +460,10 @@ const Product = () => {
                     key={index}
                     onMouseEnter={() => hoverImg(index)}
                     onMouseLeave={() => unhoverImg(index)}
-                    className={index === indexh && hv ? "ishover" : ""}
+                    className={index === indexhv && ishover ? "ishover" : ""}
                     src={item.img}
                     alt="Image-PRODUCT"
                   />
-
                   <Link href="#" passHref>
                     <div
                       className="
@@ -510,7 +484,6 @@ const Product = () => {
                     </div>
                   </Link>
                 </div>
-
                 <div className="block2-txt flex-w flex-t p-t-14">
                   <div className="block2-txt-child1 flex-col-l">
                     <a
@@ -519,10 +492,8 @@ const Product = () => {
                     >
                       {item.name}
                     </a>
-
                     <span className="stext-105 cl3"> $16.64 </span>
                   </div>
-
                   <div className="block2-txt-child2 flex-r p-t-3">
                     <a
                       href="#"
@@ -530,12 +501,12 @@ const Product = () => {
                     >
                       <Image
                         className="icon-heart1 dis-block trans-04"
-                        src={item.icon1}
+                        src={item.firstIcon}
                         alt="ICON"
                       />
                       <Image
                         className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src={item.icon2}
+                        src={item.secondIcon}
                         alt="ICON"
                       />
                     </a>
@@ -545,7 +516,6 @@ const Product = () => {
             </div>
           ))}
         </div>
-
         {/* <!-- Load more --> */}
         <div className="flex-c-m flex-w w-full p-t-45">
           <Link href="/shop" passHref>

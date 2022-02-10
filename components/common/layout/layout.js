@@ -1,4 +1,5 @@
 import React from "react";
+import Backtotop from "../backtotop/backtotop";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
@@ -7,6 +8,7 @@ export default function Layout({ children }) {
     <div>
       <Header />
       {children}
+      <Backtotop />
       <Footer />
     </div>
   );

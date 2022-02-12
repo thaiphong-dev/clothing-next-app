@@ -11,6 +11,8 @@ const Product = () => {
   const [isfilter, setisfilter] = useState(false);
   const [isSearch, setisSearch] = useState(false);
   const [indexTagFilter, setIndexTagFilter] = useState(0);
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
 
   const hoverImg = (index) => {
     setishover(true);
@@ -25,19 +27,20 @@ const Product = () => {
     if (isSearch && !isfilter) {
       setisSearch(!isSearch);
       setisfilter(!isfilter);
-    }else{
+    } else {
       setisfilter(!isfilter);
     }
+    openFilter();
   };
 
   const search = () => {
-    if(isfilter && !isSearch){
+    if (isfilter && !isSearch) {
       setisfilter(!isfilter);
       setisSearch(!isSearch);
-    }else{
+    } else {
       setisSearch(!isSearch);
     }
-    
+    openSearch();
   };
 
   var classFilter = () => {
@@ -58,6 +61,16 @@ const Product = () => {
     flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search
       ${isSearch ? "show-search" : ""}
     `;
+  };
+
+  const openFilter = () => {
+    isOpenSearch ? setIsOpenSearch(!isOpenSearch) : null;
+    setIsOpenFilter(!isOpenFilter);
+  };
+
+  const openSearch = () => {
+    isOpenFilter ? setIsOpenFilter(!isOpenFilter) : null;
+    setIsOpenSearch(!isOpenSearch);
   };
 
   const productItems = [
@@ -265,7 +278,11 @@ const Product = () => {
             </div>
           </div>
           {/* <!-- Search product --> */}
-          <div className="dis-none panel-search w-full p-t-10 p-b-15">
+          <div
+            className={`dis-none panel-search w-full p-t-10 p-b-15  ${
+              isOpenSearch ? "active" : ""
+            }`}
+          >
             <div className="bor8 dis-flex p-l-15">
               <button className="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
                 <i className="zmdi zmdi-search"></i>
@@ -280,7 +297,11 @@ const Product = () => {
             </div>
           </div>
           {/* <!-- Filter --> */}
-          <div className="dis-none panel-filter w-full p-t-10">
+          <div
+            className={`dis-none panel-filter w-full p-t-10  ${
+              isOpenFilter ? "active" : ""
+            }`}
+          >
             <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
               <div className="filter-col1 p-r-15 p-b-27">
                 <div className="mtext-102 cl2 p-b-15">Sort By</div>
@@ -447,6 +468,8 @@ const Product = () => {
             </div>
           </div>
         </div>
+
+        {/* Product */}
         <div className="row isotope-grid">
           {productItems.map((item, index) => (
             <div

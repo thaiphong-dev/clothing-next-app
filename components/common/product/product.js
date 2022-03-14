@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
-import img from "./../../../public/images/product-01.jpg";
+import img from "./../../../public/images/product-07.jpg";
+import img1 from "./../../../public/images/product-01.jpg";
+import img2 from "./../../../public/images/product-02.jpg";
+import img3 from "./../../../public/images/product-03.jpg";
+import img4 from "./../../../public/images/product-04.jpg";
+import img5 from "./../../../public/images/product-05.jpg";
+import img6 from "./../../../public/images/product-06.jpg";
 import iconHeart1 from "./../../../public/images/icons/icon-heart-01.png";
 import iconHeart2 from "./../../../public/images/icons/icon-heart-02.png";
 import Link from "next/link";
+import { cartItemsContext } from "../layout/layout";
 
-const Product = () => {
+const Product = (props) => {
+  const valueContext = useContext(cartItemsContext);
   const [indexhv, setindehv] = useState("");
   const [ishover, setishover] = useState(false);
   const [isfilter, setisfilter] = useState(false);
@@ -73,134 +81,138 @@ const Product = () => {
     setIsOpenSearch(!isOpenSearch);
   };
 
+  const addToCart = (product) => {
+    cartItems = cartItems.concat(product);
+  };
+
   const productItems = [
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 1,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
+    },
+    {
+      img: img1,
+      name: "Esprit Ruffle Shirt",
+      price: 2,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
+    },
+    {
+      img: img2,
+      name: "Esprit Ruffle Shirt",
+      price: 3,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
+    },
+    {
+      img: img3,
+      name: "Esprit Ruffle Shirt",
+      price: 4,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
+    },
+    {
+      img: img4,
+      name: "Esprit Ruffle Shirt",
+      price: 5,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
+    },
+    {
+      img: img5,
+      name: "Esprit Ruffle Shirt",
+      price: 6,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
+    },
+    {
+      img: img6,
+      name: "Esprit Ruffle Shirt",
+      price: 7,
+      firstIcon: iconHeart1,
+      secondIcon: iconHeart2,
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
     {
       img: img,
       name: "Esprit Ruffle Shirt",
-      price: "$16,64",
+      price: 16.64,
       firstIcon: iconHeart1,
       secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
-    },
-    {
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: "$16,64",
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
-      btn: "Quick View",
+      btn: "Add to cart",
     },
   ];
 
@@ -217,7 +229,7 @@ const Product = () => {
     <section className="bg0 p-t-23 p-b-140">
       <div className="container">
         <div className="p-b-10">
-          <h3 className="ltext-103 cl5">Product Overview</h3>
+          <h3 className="ltext-103 cl5">{props.title}</h3>
         </div>
         <div className="flex-w flex-sb-m p-b-52">
           <div className="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -502,6 +514,7 @@ const Product = () => {
                         trans-04
                         js-show-modal1
                       "
+                      onClick={() => valueContext.addToCart(item)}
                     >
                       {item.btn}
                     </div>
@@ -515,7 +528,7 @@ const Product = () => {
                     >
                       {item.name}
                     </a>
-                    <span className="stext-105 cl3"> $16.64 </span>
+                    <span className="stext-105 cl3"> ${item.price} </span>
                   </div>
                   <div className="block2-txt-child2 flex-r p-t-3">
                     <a

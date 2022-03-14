@@ -1,15 +1,27 @@
-import React from "react";
+import { React, createContext, useState } from "react";
 import Backtotop from "../backtotop/backtotop";
 import Footer from "../footer/footer";
 import Header from "../header/header";
 
+export const cartItemsContext = createContext();
+
 export default function Layout({ children }) {
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (product) => {
+    setCartItems((prev) => [...prev, product]);
+    console.log(cartItems);
+  };
+  const value = {
+    cartItems,
+    addToCart,
+  };
   return (
-    <div>
+    <cartItemsContext.Provider value={value}>
       <Header />
       {children}
       <Backtotop />
       <Footer />
-    </div>
+    </cartItemsContext.Provider>
   );
 }

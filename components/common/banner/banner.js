@@ -15,7 +15,6 @@ const Banner = () => {
             <Link href="/shop" passHref>
               <div className="block1 wrap-pic-w">
                 <Image src={iBanner01} alt="Image-BANNER" />
-
                 <div
                   href="product.html"
                   className="
@@ -32,12 +31,10 @@ const Banner = () => {
                     <span className="block1-name ltext-102 trans-04 p-b-8">
                       Women
                     </span>
-
                     <span className="block1-info stext-102 trans-04">
                       Spring 2018
                     </span>
                   </div>
-
                   <div className="block1-txt-child2 p-b-4 trans-05">
                     <div className="block1-link stext-101 cl0 trans-09">
                       Shop Now
@@ -47,13 +44,11 @@ const Banner = () => {
               </div>
             </Link>
           </div>
-
           <div className="col-md-6 col-xl-4 p-b-30 m-lr-auto">
             {/* <!-- Block2 --> */}
             <Link href="/shop" passHref>
               <div className="block1 wrap-pic-w">
                 <Image src={iBanner02} alt="Image-BANNER" />
-
                 <div
                   href="product.html"
                   className="
@@ -75,7 +70,6 @@ const Banner = () => {
                       Spring 2018
                     </span>
                   </div>
-
                   <div className="block1-txt-child2 p-b-4 trans-05">
                     <div className="block1-link stext-101 cl0 trans-09">
                       Shop Now
@@ -85,13 +79,11 @@ const Banner = () => {
               </div>
             </Link>
           </div>
-
           <div className="col-md-6 col-xl-4 p-b-30 m-lr-auto">
             {/* <!-- Block3 --> */}
             <Link href="/shop" passHref>
               <div className="block1 wrap-pic-w">
                 <Image src={iBanner03} alt="Image-BANNER" />
-
                 <div
                   href="product.html"
                   className="
@@ -108,12 +100,10 @@ const Banner = () => {
                     <span className="block1-name ltext-102 trans-04 p-b-8">
                       Accessories
                     </span>
-
                     <span className="block1-info stext-102 trans-04">
                       New Trend
                     </span>
                   </div>
-
                   <div className="block1-txt-child2 p-b-4 trans-05">
                     <div className="block1-link stext-101 cl0 trans-09">
                       Shop Now

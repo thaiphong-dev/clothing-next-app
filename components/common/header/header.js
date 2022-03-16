@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import logo1 from "./../../../public/images/icons/logo-01.png";
 import iconClose2 from "./../../../public/images/icons/icon-close2.png";
 import Link from "next/link";
+import { cartItemsContext } from "../layout/layout";
 
 export default function Header() {
+  const valueContext = useContext(cartItemsContext);
   const [scroll, setScroll] = useState("wrap-menu-desktop");
   const scrolled = () => {
-    if (window.pageYOffset > 40) {
+    if (window.pageYOffset > 85) {
       setScroll("wrap-menu-desktop active");
     } else {
       setScroll("wrap-menu-desktop");
@@ -36,27 +38,35 @@ export default function Header() {
               <div className="menu-desktop">
                 <ul className="main-menu">
                   <li className="active-menu">
-                    <Link href="/" refresh="true">
+                    <Link href="/" passHref>
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href="/shop">Shop</Link>
+                    <Link href="/shop" passHref>
+                      Shop
+                    </Link>
                   </li>
                   <li className="label1" data-label1="hot">
                     <Link href="/features">Features</Link>
                   </li>
 
                   <li>
-                    <Link href="/blog">Blog</Link>
+                    <Link href="/blog" passHref>
+                      Blog
+                    </Link>
                   </li>
 
                   <li>
-                    <Link href="/about">About</Link>
+                    <Link href="/about" passHref>
+                      About
+                    </Link>
                   </li>
 
                   <li>
-                    <Link href="/contact">Contact</Link>
+                    <Link href="/contact" passHref>
+                      Contact
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -69,7 +79,7 @@ export default function Header() {
 
                 <div
                   className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                  data-notify="2"
+                  data-notify={valueContext.cartItems.length}
                 >
                   <i className="zmdi zmdi-shopping-cart"></i>
                 </div>
@@ -103,7 +113,7 @@ export default function Header() {
 
             <div
               className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-              data-notify="2"
+              data-notify={valueContext.cartItems.length}
             >
               <i className="zmdi zmdi-shopping-cart"></i>
             </div>

@@ -10,7 +10,6 @@ export default function Layout({ children }) {
 
   const addToCart = (product) => {
     setCartItems((prev) => [...prev, product]);
-    console.log(cartItems);
   };
   const value = {
     cartItems,

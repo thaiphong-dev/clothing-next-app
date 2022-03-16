@@ -21,7 +21,6 @@ export default function modal() {
                   <div className="wrap-slick3 flex-sb flex-w">
                     <div className="wrap-slick3-dots"></div>
                     <div className="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
                     <div className="slick3 gallery-lb">
                       <div
                         className="item-slick3"
@@ -104,9 +103,7 @@ export default function modal() {
                   <h4 className="mtext-105 cl2 js-name-detail p-b-14">
                     Lightweight Jacket
                   </h4>
-
                   <span className="mtext-106 cl2"> $58.79 </span>
-
                   <p className="stext-102 cl3 p-t-23">
                     Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus
                     ligula. Mauris consequat ornare feugiat.
@@ -156,7 +153,6 @@ export default function modal() {
                           >
                             <i className="fs-16 zmdi zmdi-minus"></i>
                           </div>
-
                           <input
                             className="mtext-104 cl3 txt-center num-product"
                             type="number"
@@ -213,7 +209,6 @@ export default function modal() {
                         <i className="zmdi zmdi-favorite"></i>
                       </a>
                     </div>
-
                     <a
                       href="#"
                       className="
@@ -247,7 +242,6 @@ export default function modal() {
                     >
                       <i className="fa fa-twitter"></i>
                     </a>
-
                     <a
                       href="#"
                       className="

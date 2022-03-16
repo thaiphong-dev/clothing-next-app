@@ -299,7 +299,6 @@ const Product = (props) => {
               <button className="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
                 <i className="zmdi zmdi-search"></i>
               </button>
-
               <input
                 className="mtext-107 cl2 size-114 plh2 p-r-15"
                 type="text"
@@ -480,7 +479,6 @@ const Product = (props) => {
             </div>
           </div>
         </div>
-
         {/* Product */}
         <div className="row isotope-grid">
           {productItems.map((item, index) => (

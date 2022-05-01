@@ -9,10 +9,17 @@ export default function Layout({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
-    setCartItems((prev) => [...prev, product]);
+    var index = cartItems.findIndex((item) => item.id === product.id);
+    if(index != -1){
+      cartItems[index].amount++;
+    }else{
+      product.amount++;
+        setCartItems((prev) => [...prev, product]);
+    }
   };
   const value = {
     cartItems,
+    setCartItems,
     addToCart,
   };
   return (

@@ -77,12 +77,14 @@ export default function Header() {
                   <i className="zmdi zmdi-account"></i>
                 </div>
 
-                <div
-                  className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                  data-notify={valueContext.cartItems.length}
-                >
-                  <i className="zmdi zmdi-shopping-cart"></i>
-                </div>
+                <Link href="/cart" passHref>
+                  <div
+                    className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+                    data-notify={valueContext.cartItems.length}
+                  >
+                    <i className="zmdi zmdi-shopping-cart"></i>
+                  </div>
+                </Link>
 
                 <a
                   href="#"
@@ -111,12 +113,14 @@ export default function Header() {
               <i className="zmdi zmdi-search"></i>
             </div>
 
-            <div
-              className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-              data-notify={valueContext.cartItems.length}
-            >
-              <i className="zmdi zmdi-shopping-cart"></i>
-            </div>
+            <Link href="/cart" passHref>
+              <div
+                className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+                data-notify={valueContext.cartItems.length}
+              >
+                <i className="zmdi zmdi-shopping-cart"></i>
+              </div>
+            </Link>
 
             <a
               href="#"

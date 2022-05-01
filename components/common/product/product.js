@@ -87,131 +87,131 @@ const Product = (props) => {
 
   const productItems = [
     {
+      id: "01",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 1,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "02",
       img: img1,
       name: "Esprit Ruffle Shirt",
       price: 2,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "03",
       img: img2,
       name: "Esprit Ruffle Shirt",
       price: 3,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "04",
       img: img3,
       name: "Esprit Ruffle Shirt",
       price: 4,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "05",
       img: img4,
       name: "Esprit Ruffle Shirt",
       price: 5,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "06",
       img: img5,
       name: "Esprit Ruffle Shirt",
       price: 6,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "07",
       img: img6,
       name: "Esprit Ruffle Shirt",
       price: 7,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "08",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "09",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "10",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "11",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "12",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "13",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "14",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "15",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
     {
+      id: "16",
       img: img,
       name: "Esprit Ruffle Shirt",
       price: 16.64,
-      firstIcon: iconHeart1,
-      secondIcon: iconHeart2,
+      amount: 0,
       btn: "Add to cart",
     },
   ];
@@ -512,7 +512,9 @@ const Product = (props) => {
                         trans-04
                         js-show-modal1
                       "
-                      onClick={() => valueContext.addToCart(item)}
+                      onClick={() => (
+                        valueContext.addToCart(item)
+                      )}
                     >
                       {item.btn}
                     </div>
@@ -532,18 +534,7 @@ const Product = (props) => {
                     <a
                       href="#"
                       className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    >
-                      <Image
-                        className="icon-heart1 dis-block trans-04"
-                        src={item.firstIcon}
-                        alt="ICON"
-                      />
-                      <Image
-                        className="icon-heart2 dis-block trans-04 ab-t-l"
-                        src={item.secondIcon}
-                        alt="ICON"
-                      />
-                    </a>
+                    ></a>
                   </div>
                 </div>
               </div>

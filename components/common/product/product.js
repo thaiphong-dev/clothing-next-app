@@ -7,10 +7,9 @@ import img3 from "./../../../public/images/product-03.jpg";
 import img4 from "./../../../public/images/product-04.jpg";
 import img5 from "./../../../public/images/product-05.jpg";
 import img6 from "./../../../public/images/product-06.jpg";
-import iconHeart1 from "./../../../public/images/icons/icon-heart-01.png";
-import iconHeart2 from "./../../../public/images/icons/icon-heart-02.png";
 import Link from "next/link";
 import { cartItemsContext } from "../layout/layout";
+import Modal from "./modal";
 
 const Product = (props) => {
   const valueContext = useContext(cartItemsContext);
@@ -21,6 +20,7 @@ const Product = (props) => {
   const [indexTagFilter, setIndexTagFilter] = useState(0);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [showQV, setShowQV] = useState(false);
 
   const hoverImg = (index) => {
     setishover(true);
@@ -81,10 +81,6 @@ const Product = (props) => {
     setIsOpenSearch(!isOpenSearch);
   };
 
-  const addToCart = (product) => {
-    cartItems = cartItems.concat(product);
-  };
-
   const productItems = [
     {
       id: "01",
@@ -92,7 +88,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 1,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "02",
@@ -100,7 +96,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 2,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "03",
@@ -108,7 +104,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 3,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "04",
@@ -116,7 +112,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 4,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "05",
@@ -124,7 +120,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 5,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "06",
@@ -132,7 +128,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 6,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "07",
@@ -140,7 +136,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 7,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "08",
@@ -148,7 +144,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "09",
@@ -156,7 +152,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "10",
@@ -164,7 +160,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "11",
@@ -172,7 +168,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "12",
@@ -180,7 +176,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "13",
@@ -188,7 +184,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "14",
@@ -196,7 +192,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "15",
@@ -204,7 +200,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
     {
       id: "16",
@@ -212,7 +208,7 @@ const Product = (props) => {
       name: "Esprit Ruffle Shirt",
       price: 16.64,
       amount: 0,
-      btn: "Add to cart",
+      btn: "Quick View",
     },
   ];
 
@@ -226,34 +222,35 @@ const Product = (props) => {
   ];
 
   return (
-    <section className="bg0 p-t-23 p-b-140">
-      <div className="container">
-        <div className="p-b-10">
-          <h3 className="ltext-103 cl5">{props.title}</h3>
-        </div>
-        <div className="flex-w flex-sb-m p-b-52">
-          <div className="flex-w flex-l-m filter-tope-group m-tb-10">
-            {tagsFilter.map((item, index) => (
-              <button
-                className={
-                  indexTagFilter == index
-                    ? "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
-                    : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-                }
-                data-filter={item.datafilter}
-                key={index}
-                onClick={() => {
-                  setIndexTagFilter(index);
-                }}
-              >
-                {item.tag}
-              </button>
-            ))}
+    <>
+      <section className="bg0 p-t-23 p-b-140">
+        <div className="container">
+          <div className="p-b-10">
+            <h3 className="ltext-103 cl5">{props.title}</h3>
           </div>
-          <div className="flex-w flex-c-m m-tb-10">
-            <div className={classFilter()} onClick={filter}>
-              <i
-                className="
+          <div className="flex-w flex-sb-m p-b-52">
+            <div className="flex-w flex-l-m filter-tope-group m-tb-10">
+              {tagsFilter.map((item, index) => (
+                <button
+                  className={
+                    indexTagFilter == index
+                      ? "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
+                      : "stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+                  }
+                  data-filter={item.datafilter}
+                  key={index}
+                  onClick={() => {
+                    setIndexTagFilter(index);
+                  }}
+                >
+                  {item.tag}
+                </button>
+              ))}
+            </div>
+            <div className="flex-w flex-c-m m-tb-10">
+              <div className={classFilter()} onClick={filter}>
+                <i
+                  className="
                   icon-filter
                   cl2
                   m-r-6
@@ -261,22 +258,22 @@ const Product = (props) => {
                   trans-04
                   zmdi zmdi-filter-list
                 "
-              ></i>
-              <i
-                className="icon-close-filter
+                ></i>
+                <i
+                  className="icon-close-filter
                   cl2
                   m-r-6
                   fs-15
                   trans-04
                   zmdi zmdi-close
                   dis-none"
-              ></i>
-              Filter
-            </div>
-            <div className={classSearch()} onClick={search}>
-              <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-              <i
-                className="
+                ></i>
+                Filter
+              </div>
+              <div className={classSearch()} onClick={search}>
+                <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+                <i
+                  className="
                   icon-close-search
                   cl2
                   m-r-6
@@ -285,118 +282,134 @@ const Product = (props) => {
                   zmdi zmdi-close
                   dis-none
                 "
-              ></i>
-              Search
+                ></i>
+                Search
+              </div>
             </div>
-          </div>
-          {/* <!-- Search product --> */}
-          <div
-            className={`dis-none panel-search w-full p-t-10 p-b-15  ${
-              isOpenSearch ? "active" : ""
-            }`}
-          >
-            <div className="bor8 dis-flex p-l-15">
-              <button className="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-                <i className="zmdi zmdi-search"></i>
-              </button>
-              <input
-                className="mtext-107 cl2 size-114 plh2 p-r-15"
-                type="text"
-                name="search-product"
-                placeholder="Search"
-              />
+            {/* <!-- Search product --> */}
+            <div
+              className={`dis-none panel-search w-full p-t-10 p-b-15  ${
+                isOpenSearch ? "active" : ""
+              }`}
+            >
+              <div className="bor8 dis-flex p-l-15">
+                <button className="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+                  <i className="zmdi zmdi-search"></i>
+                </button>
+                <input
+                  className="mtext-107 cl2 size-114 plh2 p-r-15"
+                  type="text"
+                  name="search-product"
+                  placeholder="Search"
+                />
+              </div>
             </div>
-          </div>
-          {/* <!-- Filter --> */}
-          <div
-            className={`dis-none panel-filter w-full p-t-10  ${
-              isOpenFilter ? "active" : ""
-            }`}
-          >
-            <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-              <div className="filter-col1 p-r-15 p-b-27">
-                <div className="mtext-102 cl2 p-b-15">Sort By</div>
-                <ul>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      Default
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      Popularity
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      Average rating
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a
-                      href="#"
-                      className="filter-link stext-106 trans-04 filter-link-active"
-                    >
-                      Newness
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      Price: Low to High
-                    </a>
-                  </li>
+            {/* <!-- Filter --> */}
+            <div
+              className={`dis-none panel-filter w-full p-t-10  ${
+                isOpenFilter ? "active" : ""
+              }`}
+            >
+              <div className="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+                <div className="filter-col1 p-r-15 p-b-27">
+                  <div className="mtext-102 cl2 p-b-15">Sort By</div>
+                  <ul>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        Default
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        Popularity
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        Average rating
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a
+                        href="#"
+                        className="filter-link stext-106 trans-04 filter-link-active"
+                      >
+                        Newness
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        Price: Low to High
+                      </a>
+                    </li>
 
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      Price: High to Low
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="filter-col2 p-r-15 p-b-27">
-                <div className="mtext-102 cl2 p-b-15">Price</div>
-                <ul>
-                  <li className="p-b-6">
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        Price: High to Low
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="filter-col2 p-r-15 p-b-27">
+                  <div className="mtext-102 cl2 p-b-15">Price</div>
+                  <ul>
+                    <li className="p-b-6">
+                      <a
+                        href="#"
+                        className="filter-link stext-106 trans-04 filter-link-active"
+                      >
+                        All
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        $0.00 - $50.00
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        $50.00 - $100.00
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        $100.00 - $150.00
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        $150.00 - $200.00
+                      </a>
+                    </li>
+                    <li className="p-b-6">
+                      <a href="#" className="filter-link stext-106 trans-04">
+                        $200.00+
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="filter-col4 p-b-27">
+                  <div className="mtext-102 cl2 p-b-15">Tags</div>
+                  <div className="flex-w p-t-4 m-r--5">
                     <a
                       href="#"
-                      className="filter-link stext-106 trans-04 filter-link-active"
+                      className="
+                      flex-c-m
+                      stext-107
+                      cl6
+                      size-301
+                      bor7
+                      p-lr-15
+                      hov-tag1
+                      trans-04
+                      m-r-5 m-b-5
+                    "
                     >
-                      All
+                      Fashion
                     </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      $0.00 - $50.00
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      $50.00 - $100.00
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      $100.00 - $150.00
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      $150.00 - $200.00
-                    </a>
-                  </li>
-                  <li className="p-b-6">
-                    <a href="#" className="filter-link stext-106 trans-04">
-                      $200.00+
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="filter-col4 p-b-27">
-                <div className="mtext-102 cl2 p-b-15">Tags</div>
-                <div className="flex-w p-t-4 m-r--5">
-                  <a
-                    href="#"
-                    className="
+                    <a
+                      href="#"
+                      className="
                       flex-c-m
                       stext-107
                       cl6
@@ -407,12 +420,12 @@ const Product = (props) => {
                       trans-04
                       m-r-5 m-b-5
                     "
-                  >
-                    Fashion
-                  </a>
-                  <a
-                    href="#"
-                    className="
+                    >
+                      Lifestyle
+                    </a>
+                    <a
+                      href="#"
+                      className="
                       flex-c-m
                       stext-107
                       cl6
@@ -423,12 +436,12 @@ const Product = (props) => {
                       trans-04
                       m-r-5 m-b-5
                     "
-                  >
-                    Lifestyle
-                  </a>
-                  <a
-                    href="#"
-                    className="
+                    >
+                      Denim
+                    </a>
+                    <a
+                      href="#"
+                      className="
                       flex-c-m
                       stext-107
                       cl6
@@ -439,12 +452,12 @@ const Product = (props) => {
                       trans-04
                       m-r-5 m-b-5
                     "
-                  >
-                    Denim
-                  </a>
-                  <a
-                    href="#"
-                    className="
+                    >
+                      Streetstyle
+                    </a>
+                    <a
+                      href="#"
+                      className="
                       flex-c-m
                       stext-107
                       cl6
@@ -455,51 +468,35 @@ const Product = (props) => {
                       trans-04
                       m-r-5 m-b-5
                     "
-                  >
-                    Streetstyle
-                  </a>
-                  <a
-                    href="#"
-                    className="
-                      flex-c-m
-                      stext-107
-                      cl6
-                      size-301
-                      bor7
-                      p-lr-15
-                      hov-tag1
-                      trans-04
-                      m-r-5 m-b-5
-                    "
-                  >
-                    Crafts
-                  </a>
+                    >
+                      Crafts
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* Product */}
-        <div className="row isotope-grid">
-          {productItems.map((item, index) => (
-            <div
-              className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women"
-              key={index}
-            >
-              {/* <!-- Block2 --> */}
-              <div className="block2">
-                <div className="block2-pic hov-Image0">
-                  <Image
-                    key={index}
-                    onMouseEnter={() => hoverImg(index)}
-                    onMouseLeave={() => unhoverImg(index)}
-                    className={index === indexhv && ishover ? "ishover" : ""}
-                    src={item.img}
-                    alt="Image-PRODUCT"
-                  />
-                  <Link href="#" passHref>
-                    <div
-                      className="
+          {/* Product */}
+          <div className="row isotope-grid">
+            {productItems.map((item, index) => (
+              <div
+                className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women"
+                key={index}
+              >
+                {/* <!-- Block2 --> */}
+                <div className="block2">
+                  <div className="block2-pic hov-Image0">
+                    <Image
+                      key={index}
+                      onMouseEnter={() => hoverImg(index)}
+                      onMouseLeave={() => unhoverImg(index)}
+                      className={index === indexhv && ishover ? "ishover" : ""}
+                      src={item.img}
+                      alt="Image-PRODUCT"
+                    />
+                    <Link href="#" passHref>
+                      <div
+                        className="
                         block2-btn
                         flex-c-m
                         stext-103
@@ -512,40 +509,38 @@ const Product = (props) => {
                         trans-04
                         js-show-modal1
                       "
-                      onClick={() => (
-                        valueContext.addToCart(item)
-                      )}
-                    >
-                      {item.btn}
-                    </div>
-                  </Link>
-                </div>
-                <div className="block2-txt flex-w flex-t p-t-14">
-                  <div className="block2-txt-child1 flex-col-l">
-                    <a
-                      href="product-detail.html"
-                      className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
-                    >
-                      {item.name}
-                    </a>
-                    <span className="stext-105 cl3"> ${item.price} </span>
+                        onClick={() => valueContext.setShowQV(true)}
+                      >
+                        {item.btn}
+                      </div>
+                    </Link>
                   </div>
-                  <div className="block2-txt-child2 flex-r p-t-3">
-                    <a
-                      href="#"
-                      className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-                    ></a>
+                  <div className="block2-txt flex-w flex-t p-t-14">
+                    <div className="block2-txt-child1 flex-col-l">
+                      <a
+                        href="product-detail.html"
+                        className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+                      >
+                        {item.name}
+                      </a>
+                      <span className="stext-105 cl3"> ${item.price} </span>
+                    </div>
+                    <div className="block2-txt-child2 flex-r p-t-3">
+                      <a
+                        href="#"
+                        className="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                      ></a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        {/* <!-- Load more --> */}
-        <div className="flex-c-m flex-w w-full p-t-45">
-          <Link href="/shop" passHref>
-            <div
-              className="
+            ))}
+          </div>
+          {/* <!-- Load more --> */}
+          <div className="flex-c-m flex-w w-full p-t-45">
+            <Link href="/shop" passHref>
+              <div
+                className="
               flex-c-m
               stext-101
               cl5
@@ -556,13 +551,15 @@ const Product = (props) => {
               p-lr-15
               trans-04
             "
-            >
-              Load More
-            </div>
-          </Link>
+              >
+                Load More
+              </div>
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Modal />
+    </>
   );
 };
 

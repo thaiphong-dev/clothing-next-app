@@ -7,20 +7,23 @@ export const cartItemsContext = createContext();
 
 export default function Layout({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [showQV, setShowQV] = useState(false);
 
   const addToCart = (product) => {
     var index = cartItems.findIndex((item) => item.id === product.id);
-    if(index != -1){
+    if (index != -1) {
       cartItems[index].amount++;
-    }else{
+    } else {
       product.amount++;
-        setCartItems((prev) => [...prev, product]);
+      setCartItems((prev) => [...prev, product]);
     }
   };
   const value = {
     cartItems,
     setCartItems,
     addToCart,
+    showQV,
+    setShowQV,
   };
   return (
     <cartItemsContext.Provider value={value}>

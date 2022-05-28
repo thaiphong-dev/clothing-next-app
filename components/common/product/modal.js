@@ -1,19 +1,48 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { CloseOutlined } from "@ant-design/icons";
 import productDetail1 from "../../../public/images/product-detail-01.jpg";
 import productDetail2 from "../../../public/images/product-detail-02.jpg";
 import productDetail3 from "../../../public/images/product-detail-03.jpg";
+import Carousel from "react-bootstrap/Carousel";
+import { cartItemsContext } from "../layout/layout";
+import Select from "react-select";
 
-export default function modal() {
+const Modal = () => {
+  const valueContext = useContext(cartItemsContext);
+  const [valueProduct, setValueProduct] = useState(1);
+
+  const optionsSize = [
+    { id: 1, value: "S", label: "Size S" },
+    { id: 2, value: "M", label: "Size M" },
+    { id: 3, value: "L", label: "Size L" },
+    { id: 4, value: "XL", label: "Size XL" },
+  ];
+
+  const optionsColor = [
+    { id: 1, value: "Red", label: "Red" },
+    { id: 2, value: "Blue", label: "Blue" },
+    { id: 3, value: "Black", label: "Black" },
+    { id: 4, value: "White", label: "White" },
+  ];
+
   return (
     <>
-      <div className="wrap-modal1 js-modal1 p-t-60 p-b-20">
+      <div
+        className={
+          valueContext.showQV
+            ? "wrap-modal1 js-modal1 p-t-60 p-b-20 show-modal1"
+            : "wrap-modal1 js-modal1 p-t-60 p-b-20"
+        }
+      >
         <div className="overlay-modal1 js-hide-modal1"></div>
         <div className="container">
           <div className="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
             <button className="how-pos3 hov3 trans-04 js-hide-modal1">
-              <CloseOutlined />
+              <CloseOutlined
+                style={{ fontSize: "16px", color: "white" }}
+                onClick={() => valueContext.setShowQV(false)}
+              />
             </button>
             <div className="row">
               <div className="col-md-6 col-lg-7 p-b-30">
@@ -21,80 +50,29 @@ export default function modal() {
                   <div className="wrap-slick3 flex-sb flex-w">
                     <div className="wrap-slick3-dots"></div>
                     <div className="wrap-slick3-arrows flex-sb-m flex-w"></div>
-                    <div className="slick3 gallery-lb">
-                      <div
-                        className="item-slick3"
-                        data-thumb="images/product-detail-01.jpg"
-                      >
-                        <div className="wrap-pic-w pos-relative">
-                          <Image src={productDetail1} alt="IMG-PRODUCT" />
-                          <a
-                            className="
-                          flex-c-m
-                          size-108
-                          how-pos1
-                          bor0
-                          fs-16
-                          cl10
-                          bg0
-                          hov-btn3
-                          trans-04
-                        "
-                            href="../../../pub"
-                          >
-                            <i className="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="item-slick3"
-                        data-thumb="images/product-detail-02.jpg"
-                      >
-                        <div className="wrap-pic-w pos-relative">
-                          <Image src={productDetail2} alt="IMG-PRODUCT" />
-                          <a
-                            className="
-                          flex-c-m
-                          size-108
-                          how-pos1
-                          bor0
-                          fs-16
-                          cl10
-                          bg0
-                          hov-btn3
-                          trans-04
-                        "
-                            href="images/product-detail-02.jpg"
-                          >
-                            <i className="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="item-slick3"
-                        data-thumb="images/product-detail-03.jpg"
-                      >
-                        <div className="wrap-pic-w pos-relative">
-                          <Image src={productDetail3} alt="IMG-PRODUCT" />
-                          <a
-                            className="
-                          flex-c-m
-                          size-108
-                          how-pos1
-                          bor0
-                          fs-16
-                          cl10
-                          bg0
-                          hov-btn3
-                          trans-04
-                        "
-                            href="images/product-detail-03.jpg"
-                          >
-                            <i className="fa fa-expand"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                    <Carousel fade>
+                      <Carousel.Item>
+                        <Image
+                          className="d-block w-100"
+                          src={productDetail1}
+                          alt="First slide"
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <Image
+                          className="d-block w-100"
+                          src={productDetail2}
+                          alt="Second slide"
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <Image
+                          className="d-block w-100"
+                          src={productDetail3}
+                          alt="Third slide"
+                        />
+                      </Carousel.Item>
+                    </Carousel>
                   </div>
                 </div>
               </div>
@@ -113,13 +91,11 @@ export default function modal() {
                       <div className="size-203 flex-c-m respon6">Size</div>
                       <div className="size-204 respon6-next">
                         <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="time">
-                            <option>Choose an option</option>
-                            <option>Size S</option>
-                            <option>Size M</option>
-                            <option>Size L</option>
-                            <option>Size XL</option>
-                          </select>
+                          <Select
+                            id="size"
+                            instanceId="size"
+                            options={optionsSize}
+                          />
                           <div className="dropDownSelect2"></div>
                         </div>
                       </div>
@@ -128,13 +104,11 @@ export default function modal() {
                       <div className="size-203 flex-c-m respon6">Color</div>
                       <div className="size-204 respon6-next">
                         <div className="rs1-select2 bor8 bg0">
-                          <select className="js-select2" name="time">
-                            <option>Choose an option</option>
-                            <option>Red</option>
-                            <option>Blue</option>
-                            <option>White</option>
-                            <option>Grey</option>
-                          </select>
+                          <Select
+                            id="color"
+                            instanceId="color"
+                            options={optionsColor}
+                          />
                           <div className="dropDownSelect2"></div>
                         </div>
                       </div>
@@ -151,13 +125,26 @@ export default function modal() {
                           flex-c-m
                         "
                           >
-                            <i className="fs-16 zmdi zmdi-minus"></i>
+                            <i
+                              className="fs-16 zmdi zmdi-minus"
+                              onClick={() => {
+                                console.log(valueProduct);
+                                if (valueProduct > 1) {
+                                  setValueProduct(valueProduct - 1);
+                                }
+                              }}
+                            ></i>
                           </div>
                           <input
                             className="mtext-104 cl3 txt-center num-product"
                             type="number"
                             name="num-product"
-                            value="1"
+                            placeholder={valueProduct}
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
                           />
                           <div
                             className="
@@ -168,7 +155,12 @@ export default function modal() {
                           flex-c-m
                         "
                           >
-                            <i className="fs-16 zmdi zmdi-plus"></i>
+                            <i
+                              className="fs-16 zmdi zmdi-plus"
+                              onClick={() => {
+                                setValueProduct(valueProduct + 1);
+                              }}
+                            ></i>
                           </div>
                         </div>
                         <button
@@ -267,4 +259,6 @@ export default function modal() {
       </div>
     </>
   );
-}
+};
+
+export default Modal;

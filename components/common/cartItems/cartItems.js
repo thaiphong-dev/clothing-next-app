@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { cartItemsContext } from "../layout/layout";
+import { totalPriceCT } from "../../../pages/cart";
 import Image from "next/image";
 
 const Cartitems = () => {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const valueContext = useContext(cartItemsContext);
+  const totalContext = useContext(totalPriceCT);
   const changeValueProduct = (calc, id) => {
     var index = valueContext.cartItems.findIndex((item) => item.id === id);
     if (calc === "+") {
@@ -15,6 +17,18 @@ const Cartitems = () => {
     }
     forceUpdate();
   };
+
+  const totalPrice = () => {
+    var price = 0;
+    valueContext.cartItems.forEach((item) => {
+      price += item.price * item.amount;
+    });
+    totalContext.setTotalPrice(price);
+  };
+
+  useEffect(() => {
+    totalPrice();
+  });
 
   const deleteItem = (id) => {
     valueContext.setCartItems(
@@ -39,16 +53,25 @@ const Cartitems = () => {
             <div className="wrap-num-product flex-w m-l-auto m-r-0">
               <div
                 className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
-                onClick={() => changeValueProduct("-", item.id)}
+                onClick={() => {
+                  changeValueProduct("-", item.id);
+                  totalPrice();
+                }}
               >
                 <i className="fs-16 zmdi zmdi-minus"></i>
               </div>
-              <div className="mtext-104 cl3 txt-center num-product" style={{paddingTop:"9px"}}>
+              <div
+                className="mtext-104 cl3 txt-center num-product"
+                style={{ paddingTop: "9px" }}
+              >
                 {item.amount}
               </div>
               <div
                 className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
-                onClick={() => changeValueProduct("+", item.id)}
+                onClick={() => {
+                  changeValueProduct("+", item.id);
+                  totalPrice();
+                }}
               >
                 <i className="fs-16 zmdi zmdi-plus"></i>
               </div>

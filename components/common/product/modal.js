@@ -11,7 +11,7 @@ import Select from "react-select";
 const Modal = () => {
   const valueContext = useContext(cartItemsContext);
   const [valueProduct, setValueProduct] = useState(1);
-
+  console.log(valueContext.itemQV);
   const optionsSize = [
     { id: 1, value: "S", label: "Size S" },
     { id: 2, value: "M", label: "Size M" },
@@ -176,6 +176,9 @@ const Modal = () => {
                         trans-04
                         js-addcart-detail
                       "
+                          onClick={() =>
+                            valueContext.addToCart(valueContext.itemQV)
+                          }
                         >
                           Add to cart
                         </button>

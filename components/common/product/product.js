@@ -20,7 +20,6 @@ const Product = (props) => {
   const [indexTagFilter, setIndexTagFilter] = useState(0);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-  const [showQV, setShowQV] = useState(false);
 
   const hoverImg = (index) => {
     setishover(true);
@@ -509,7 +508,10 @@ const Product = (props) => {
                         trans-04
                         js-show-modal1
                       "
-                        onClick={() => valueContext.setShowQV(true)}
+                        onClick={() => {
+                          valueContext.setShowQV(true);
+                          valueContext.setItemQV(item);
+                        }}
                       >
                         {item.btn}
                       </div>

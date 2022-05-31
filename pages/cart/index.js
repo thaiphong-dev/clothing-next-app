@@ -1,27 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, createContext } from "react";
 import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
 
+export const totalPriceCT = createContext();
+
 const Index = () => {
   const valueContext = useContext(cartItemsContext);
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
-
+  const [totalPrice, setTotalPrice] = useState(0);
   const options = [
     { value: "USA", label: "USA", id: "01" },
     { value: "UK", label: "UK", id: "02" },
   ];
 
-  const totalPrice = () => {
-    var price = 0;
-    valueContext.cartItems.forEach((item) => {
-      price += item.price * item.amount;
-    });
-    return price;
-  };
+  const value = { totalPrice, setTotalPrice };
+
   return (
-    <>
+    <totalPriceCT.Provider value={value}>
       <div className="container">
         <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
           <a href="index.html" className="stext-109 cl8 hov-cl1 trans-04">
@@ -65,10 +60,7 @@ const Index = () => {
                       Apply coupon
                     </div>
                   </div>
-                  <div
-                    className="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                    onClick={() => forceUpdate()}
-                  >
+                  <div className="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                     Update Cart
                   </div>
                 </div>
@@ -82,7 +74,7 @@ const Index = () => {
                     <span className="stext-110 cl2">Subtotal:</span>
                   </div>
                   <div className="size-209">
-                    <span className="mtext-110 cl2">${totalPrice()}</span>
+                    <span className="mtext-110 cl2">${totalPrice}</span>
                   </div>
                 </div>
                 <div className="flex-w flex-t bor12 p-t-15 p-b-30">
@@ -129,7 +121,7 @@ const Index = () => {
                     <span className="mtext-101 cl2">Total:</span>
                   </div>
                   <div className="size-209 p-t-1">
-                    <span className="mtext-110 cl2">${totalPrice()}</span>
+                    <span className="mtext-110 cl2">${totalPrice}</span>
                   </div>
                 </div>
                 <button className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
@@ -140,7 +132,7 @@ const Index = () => {
           </div>
         </div>
       </form>
-    </>
+    </totalPriceCT.Provider>
   );
 };
 export default Index;

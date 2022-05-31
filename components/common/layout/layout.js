@@ -8,6 +8,7 @@ export const cartItemsContext = createContext();
 export default function Layout({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [showQV, setShowQV] = useState(false);
+  const [itemQV, setItemQV] = useState();
 
   const addToCart = (product) => {
     var index = cartItems.findIndex((item) => item.id === product.id);
@@ -24,6 +25,8 @@ export default function Layout({ children }) {
     addToCart,
     showQV,
     setShowQV,
+    itemQV,
+    setItemQV,
   };
   return (
     <cartItemsContext.Provider value={value}>

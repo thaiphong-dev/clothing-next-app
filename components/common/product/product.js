@@ -1,15 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import img from "./../../../public/images/product-07.jpg";
-import img1 from "./../../../public/images/product-01.jpg";
-import img2 from "./../../../public/images/product-02.jpg";
-import img3 from "./../../../public/images/product-03.jpg";
-import img4 from "./../../../public/images/product-04.jpg";
-import img5 from "./../../../public/images/product-05.jpg";
-import img6 from "./../../../public/images/product-06.jpg";
 import Link from "next/link";
 import { cartItemsContext } from "../layout/layout";
+import image from "../../../public/images/product-01.jpg";
 import Modal from "./modal";
+import ProductsApi from "../../../public/api/productsApi";
 
 const Product = (props) => {
   const valueContext = useContext(cartItemsContext);
@@ -20,6 +15,8 @@ const Product = (props) => {
   const [indexTagFilter, setIndexTagFilter] = useState(0);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [productItems, setProductItems] = useState();
+  const [idQV, setIdQV] = useState("");
 
   const hoverImg = (index) => {
     setishover(true);
@@ -80,144 +77,21 @@ const Product = (props) => {
     setIsOpenSearch(!isOpenSearch);
   };
 
-  const productItems = [
-    {
-      id: "01",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 1,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "02",
-      img: img1,
-      name: "Esprit Ruffle Shirt",
-      price: 2,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "03",
-      img: img2,
-      name: "Esprit Ruffle Shirt",
-      price: 3,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "04",
-      img: img3,
-      name: "Esprit Ruffle Shirt",
-      price: 4,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "05",
-      img: img4,
-      name: "Esprit Ruffle Shirt",
-      price: 5,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "06",
-      img: img5,
-      name: "Esprit Ruffle Shirt",
-      price: 6,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "07",
-      img: img6,
-      name: "Esprit Ruffle Shirt",
-      price: 7,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "08",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "09",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "10",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "11",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "12",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "13",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "14",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "15",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-    {
-      id: "16",
-      img: img,
-      name: "Esprit Ruffle Shirt",
-      price: 16.64,
-      amount: 0,
-      btn: "Quick View",
-    },
-  ];
+  const fetchProduct = async () => {
+    const response = await ProductsApi.getAllProduct();
+    setProductItems(response.product);
+    console.log("product Item:", productItems);
+  };
+
+  useEffect(() => {
+    fetchProduct();
+    console.log("product Item:", productItems);
+  }, []);
 
   const tagsFilter = [
     { tag: "All Products", datafilter: "*" },
     { tag: "Women", datafilter: "women" },
     { tag: "Men", datafilter: "men" },
-    { tag: "Bag", datafilter: "bag" },
-    { tag: "Shoes", datafilter: "shoes" },
-    { tag: "Watches", datafilter: "watches" },
   ];
 
   return (
@@ -477,7 +351,7 @@ const Product = (props) => {
           </div>
           {/* Product */}
           <div className="row isotope-grid">
-            {productItems.map((item, index) => (
+            {productItems?.map((item, index) => (
               <div
                 className="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women"
                 key={index}
@@ -490,7 +364,7 @@ const Product = (props) => {
                       onMouseEnter={() => hoverImg(index)}
                       onMouseLeave={() => unhoverImg(index)}
                       className={index === indexhv && ishover ? "ishover" : ""}
-                      src={item.img}
+                      src={image}
                       alt="Image-PRODUCT"
                     />
                     <Link href="#" passHref>
@@ -511,9 +385,10 @@ const Product = (props) => {
                         onClick={() => {
                           valueContext.setShowQV(true);
                           valueContext.setItemQV(item);
+                          setIdQV(item._id);
                         }}
                       >
-                        {item.btn}
+                        Quick View
                       </div>
                     </Link>
                   </div>
@@ -523,9 +398,9 @@ const Product = (props) => {
                         href="product-detail.html"
                         className="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
                       >
-                        {item.name}
+                        {item.productname}
                       </a>
-                      <span className="stext-105 cl3"> ${item.price} </span>
+                      <span className="stext-105 cl3"> {item.price} Vnd </span>
                     </div>
                     <div className="block2-txt-child2 flex-r p-t-3">
                       <a
@@ -560,7 +435,7 @@ const Product = (props) => {
           </div>
         </div>
       </section>
-      <Modal />
+      <Modal idQV={idQV} />
     </>
   );
 };

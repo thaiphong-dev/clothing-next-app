@@ -8,24 +8,47 @@ import Carousel from "react-bootstrap/Carousel";
 import { cartItemsContext } from "../layout/layout";
 import Alert from "react-bootstrap/Alert";
 import Select from "react-select";
+import ProductsApi from "./../../../public/api/productsApi";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
 
-const Modal = () => {
+const Modal = (props) => {
   const valueContext = useContext(cartItemsContext);
   const [valueProduct, setValueProduct] = useState(1);
   const [isalert, setIsalert] = useState(false);
-  const optionsSize = [
-    { id: 1, value: "S", label: "Size S" },
-    { id: 2, value: "M", label: "Size M" },
-    { id: 3, value: "L", label: "Size L" },
-    { id: 4, value: "XL", label: "Size XL" },
-  ];
+  const [product, setProduct] = useState();
+  const [detailProduct, setDetailProduct] = useState([]);
+  const [listSize, setListSize] = useState([{}]);
 
-  const optionsColor = [
-    { id: 1, value: "Red", label: "Red" },
-    { id: 2, value: "Blue", label: "Blue" },
-    { id: 3, value: "Black", label: "Black" },
-    { id: 4, value: "White", label: "White" },
-  ];
+  const fetchProduct = async (id) => {
+    const response = await ProductsApi.getAllProduct();
+    setDetailProduct(response.product);
+    console.log(detailProduct);
+    getSizeProduct();
+  };
+
+  const getSizeProduct = () => {
+    if (detailProduct !== undefined) {
+      const temp = detailProduct?.find((item) => item._id === props.idQV);
+      console.log("temp:", temp?.productInfo);
+      setProduct(temp);
+      const temp2 = temp?.productInfo?.map((item) => {
+        return {
+          id: item._id,
+          value: item.size,
+          lable: "Size " + item.size,
+        };
+      });
+
+      console.log("temp2:", temp2);
+      setListSize(temp2);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct(props.idQV);
+    console.log("list Size", listSize);
+  }, [props.idQV, valueProduct]);
 
   return (
     <>
@@ -86,23 +109,26 @@ const Modal = () => {
               <div className="col-md-6 col-lg-5 p-b-30">
                 <div className="p-r-50 p-t-5 p-lr-0-lg">
                   <h4 className="mtext-105 cl2 js-name-detail p-b-14">
-                    Lightweight Jacket
+                    {product?.productname}
                   </h4>
-                  <span className="mtext-106 cl2"> $58.79 </span>
+                  <span className="mtext-106 cl2">
+                    {product?.price}{" "}
+                  </span>
                   <p className="stext-102 cl3 p-t-23">
-                    Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus
-                    ligula. Mauris consequat ornare feugiat.
+                    {product?.preview}
                   </p>
                   <div className="p-t-33">
                     <div className="flex-w flex-r-m p-b-10">
                       <div className="size-203 flex-c-m respon6">Size</div>
                       <div className="size-204 respon6-next">
                         <div className="rs1-select2 bor8 bg0">
-                          <Select
-                            id="size"
-                            instanceId="size"
-                            options={optionsSize}
-                          />
+                          <ButtonGroup aria-label="Basic example">
+                            {listSize?.map((item) => (
+                              <Button variant="secondary" key={item._id}>
+                                {item.lable}
+                              </Button>
+                            ))}
+                          </ButtonGroup>
                           <div className="dropDownSelect2"></div>
                         </div>
                       </div>
@@ -128,17 +154,7 @@ const Modal = () => {
                               }}
                             ></i>
                           </div>
-                          <input
-                            className="mtext-104 cl3 txt-center num-product"
-                            type="number"
-                            name="num-product"
-                            placeholder={valueProduct}
-                            onKeyPress={(event) => {
-                              if (!/[0-9]/.test(event.key)) {
-                                event.preventDefault();
-                              }
-                            }}
-                          />
+                          <div className="mtext-104 cl3 txt-center num-product" style={{ paddingTop: "9px" }}>{valueProduct}</div>
                           <div
                             className="
                           btn-num-product-up
@@ -150,9 +166,9 @@ const Modal = () => {
                           >
                             <i
                               className="fs-16 zmdi zmdi-plus"
-                              onClick={() => {
-                                setValueProduct(valueProduct + 1);
-                              }}
+                              onClick={() =>
+                                setValueProduct(valueProduct + 1)
+                              }
                             ></i>
                           </div>
                         </div>

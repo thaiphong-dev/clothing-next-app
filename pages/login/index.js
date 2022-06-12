@@ -11,25 +11,26 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect } from "react";
-const Login = () => {
-  useEffect(() => {
-    if (localStorage.getItem("token") == "undefined") {
-      console.log("dung vay");
-      localStorage.setItem("token", "");
-    }
-  }, []);
+import userApi from "./../../public/api/usersApi";
 
+const Login = () => {
   const router = useRouter();
+  const login = async (param) => {
+    try {
+      const response = await userApi.login(param);
+      localStorage.setItem("token", response.accessToken);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const formik = useFormik({
     initialValues: {
-      username: "user3",
-      password: "123",
+      email: "test1@gmail.com",
+      password: "123123123",
     },
     validationSchema: Yup.object({
-      username: Yup.string()
-        // .email(
-        //   'Must be a valid email')
+      email: Yup.string()
         .max(255)
         .required("Username is required"),
       password: Yup.string().max(255).required("Password is required"),
@@ -42,7 +43,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Login | Clothing Shop</title>
       </Head>
       <Box
         component="main"
@@ -63,16 +64,16 @@ const Login = () => {
             </Box>
 
             <TextField
-              error={Boolean(formik.touched.username && formik.errors.username)}
+              error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              helperText={formik.touched.username && formik.errors.username}
-              label="Username"
+              helperText={formik.touched.email && formik.errors.email}
+              label="Email"
               margin="normal"
-              name="username"
+              name="email"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="text"
-              value={formik.values.username}
+              type="email"
+              value={formik.values.email}
               variant="outlined"
             />
             <TextField

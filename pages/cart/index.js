@@ -1,4 +1,4 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
@@ -6,13 +6,11 @@ import { cartItemsContext } from "../../components/common/layout/layout";
 export const totalPriceCT = createContext();
 
 const Index = () => {
-  const valueContext = useContext(cartItemsContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const options = [
     { value: "USA", label: "USA", id: "01" },
     { value: "UK", label: "UK", id: "02" },
   ];
-
   const value = { totalPrice, setTotalPrice };
 
   return (

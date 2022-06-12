@@ -4,10 +4,10 @@ import Banner from "../components/common/banner/banner";
 import Product from "../components/common/product/product";
 export default function Home() {
   return (
-    <div>
+    <>
       <Slider />
       <Banner />
       <Product title="Product Overview" />
-    </div>
+    </>
   );
 }

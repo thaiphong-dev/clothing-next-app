@@ -18,7 +18,6 @@ export default function Layout({ children }) {
       localStorage.setItem("token", "");
       asPath.push("/login");
     }
-    console.log(localStorage.getItem("token"));
     if (index != -1) {
       cartItems[index].amount++;
     } else {

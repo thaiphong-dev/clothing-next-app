@@ -54,7 +54,7 @@ const Register = () => {
   return (
     <>
       <Head>
-        <title>Register | Material Kit</title>
+        <title>COZA STORE | Register</title>
       </Head>
       <Box
         component="main"

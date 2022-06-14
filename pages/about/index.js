@@ -2,10 +2,14 @@ import React from "react";
 import Image from "next/image";
 import imgAbout1 from "./../../public/images/about-01.jpg";
 import imgAbout2 from "./../../public/images/about-02.jpg";
+import Head from "next/head";
 
 export default function About() {
   return (
     <>
+    <Head>
+        <title>COZA STORE | Shop</title>
+      </Head>
       <section
         className="bg-img1 txt-center p-lr-15 p-tb-92"
       >

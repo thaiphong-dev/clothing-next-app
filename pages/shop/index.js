@@ -1,10 +1,14 @@
-import React from 'react'
-import Product from '../../components/common/product/product'
+import React from 'react';
+import Head from "next/head";
+import Product from '../../components/common/product/product';
 
 export default function Shop() {
     return (
-        <div>
+        <>
+            <Head>
+        <title>COZA STORE | Shop</title>
+      </Head>
             <Product title=""/>
-        </div>
+        </>
     )
 }

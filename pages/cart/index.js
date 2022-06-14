@@ -2,6 +2,7 @@ import React, { useState, createContext, useEffect } from "react";
 import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
+import Head from "next/head";
 
 export const totalPriceCT = createContext();
 
@@ -15,6 +16,9 @@ const Index = () => {
 
   return (
     <totalPriceCT.Provider value={value}>
+      <Head>
+        <title>COZA STORE | Shop</title>
+      </Head>
       <div className="container">
         <div className="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
           <a href="index.html" className="stext-109 cl8 hov-cl1 trans-04">

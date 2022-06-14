@@ -7,10 +7,9 @@ import productDetail3 from "../../../public/images/product-detail-03.jpg";
 import Carousel from "react-bootstrap/Carousel";
 import { cartItemsContext } from "../layout/layout";
 import Alert from "react-bootstrap/Alert";
-import Select from "react-select";
 import ProductsApi from "./../../../public/api/productsApi";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Button from "react-bootstrap/Button";
+import ToggleButton from 'react-bootstrap/ToggleButton';
 
 const Modal = (props) => {
   const valueContext = useContext(cartItemsContext);
@@ -19,36 +18,33 @@ const Modal = (props) => {
   const [product, setProduct] = useState();
   const [detailProduct, setDetailProduct] = useState([]);
   const [listSize, setListSize] = useState([{}]);
+  const [checked, setChecked] = useState(false);
+  const [radioValue, setRadioValue] = useState('1');
 
   const fetchProduct = async (id) => {
     const response = await ProductsApi.getAllProduct();
     setDetailProduct(response.product);
-    console.log(detailProduct);
     getSizeProduct();
   };
 
   const getSizeProduct = () => {
     if (detailProduct !== undefined) {
       const temp = detailProduct?.find((item) => item._id === props.idQV);
-      console.log("temp:", temp?.productInfo);
       setProduct(temp);
-      const temp2 = temp?.productInfo?.map((item) => {
+      const temp2 = temp?.productInfo?.map((item, index) => {
         return {
-          id: item._id,
+          name: item.size,
           value: item.size,
-          lable: "Size " + item.size,
         };
       });
-
-      console.log("temp2:", temp2);
       setListSize(temp2);
     }
   };
 
   useEffect(() => {
     fetchProduct(props.idQV);
-    console.log("list Size", listSize);
-  }, [props.idQV, valueProduct]);
+    setValueProduct(1);
+  }, [props.idQV]);
 
   return (
     <>
@@ -71,7 +67,7 @@ const Modal = (props) => {
                   marginRight: "-35px",
                   padding: "5px",
                 }}
-                onClick={() => valueContext.setShowQV(false)}
+                onClick={() => { valueContext.setShowQV(false); setValueProduct(1) }}
               />
             </button>
             <div className="row">
@@ -108,7 +104,7 @@ const Modal = (props) => {
               </div>
               <div className="col-md-6 col-lg-5 p-b-30">
                 <div className="p-r-50 p-t-5 p-lr-0-lg">
-                  <h4 className="mtext-105 cl2 js-name-detail p-b-14">
+                  <h4 className="mtext-105 cl2 js-name-detail p-b-14" style={{ paddingTop: "15px" }}>
                     {product?.productname}
                   </h4>
                   <span className="mtext-106 cl2">
@@ -121,15 +117,24 @@ const Modal = (props) => {
                     <div className="flex-w flex-r-m p-b-10">
                       <div className="size-203 flex-c-m respon6">Size</div>
                       <div className="size-204 respon6-next">
-                        <div className="rs1-select2 bor8 bg0">
-                          <ButtonGroup aria-label="Basic example">
-                            {listSize?.map((item) => (
-                              <Button variant="secondary" key={item._id}>
-                                {item.lable}
-                              </Button>
+                        <div className="rs1-select2 bor8 bg0" style={{ width: "fit-content" }}>
+                          <ButtonGroup>
+                            {listSize?.map((radio, idx) => (
+                              <ToggleButton
+                                key={idx}
+                                id={`radio-${idx}`}
+                                type="radio"
+                                variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+                                name="radio"
+                                value={radio.value}
+                                checked={radioValue === radio.value}
+                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                style={{ margin: "0 5px" }}
+                              >
+                                {radio.name}
+                              </ToggleButton>
                             ))}
                           </ButtonGroup>
-                          <div className="dropDownSelect2"></div>
                         </div>
                       </div>
                     </div>
@@ -144,14 +149,15 @@ const Modal = (props) => {
                           trans-04
                           flex-c-m
                         "
+                            onClick={() => {
+                              if (valueProduct > 1) {
+                                setValueProduct(valueProduct - 1);
+                              }
+                            }}
                           >
                             <i
                               className="fs-16 zmdi zmdi-minus"
-                              onClick={() => {
-                                if (valueProduct > 1) {
-                                  setValueProduct(valueProduct - 1);
-                                }
-                              }}
+
                             ></i>
                           </div>
                           <div className="mtext-104 cl3 txt-center num-product" style={{ paddingTop: "9px" }}>{valueProduct}</div>
@@ -163,12 +169,12 @@ const Modal = (props) => {
                           trans-04
                           flex-c-m
                         "
+                            onClick={() =>
+                              setValueProduct(valueProduct + 1)
+                            }
                           >
                             <i
                               className="fs-16 zmdi zmdi-plus"
-                              onClick={() =>
-                                setValueProduct(valueProduct + 1)
-                              }
                             ></i>
                           </div>
                         </div>
@@ -186,7 +192,10 @@ const Modal = (props) => {
                         js-addcart-detail
                       "
                           onClick={() => {
-                            valueContext.addToCart(valueContext.itemQV);
+                            //valueContext.addToCart(valueContext.itemQV);
+                            console.log("id Product: ", props.idQV);
+                            console.log("Size: ", radioValue);
+                            console.log("amount Product: ", valueProduct);
                             setIsalert(true);
                             setTimeout(() => {
                               setIsalert(false);

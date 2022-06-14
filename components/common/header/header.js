@@ -8,6 +8,7 @@ import { cartItemsContext } from "../layout/layout";
 export default function Header() {
   const valueContext = useContext(cartItemsContext);
   const [scroll, setScroll] = useState("wrap-menu-desktop");
+  const [activeMenu, setActiveMenu] = useState(1);
   const scrolled = () => {
     if (window.pageYOffset > 85) {
       setScroll("wrap-menu-desktop active");
@@ -35,22 +36,17 @@ export default function Header() {
               {/* <!-- Menu desktop --> */}
               <div className="menu-desktop">
                 <ul className="main-menu">
-                  <li className="active-menu">
+                  <li className={(activeMenu === 1) ? "active-menu" : ""} onClick={() => setActiveMenu(1)}>
                     <Link href="/" passHref>
                       Home
                     </Link>
                   </li>
-                  <li>
+                  <li className={(activeMenu === 2) ? "active-menu" : ""} onClick={() => setActiveMenu(2)}>
                     <Link href="/shop" passHref>
                       Shop
                     </Link>
                   </li>
-                  <li>
-                    <Link href="/blog" passHref>
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
+                  <li className={(activeMenu === 3) ? "active-menu" : ""} onClick={() => setActiveMenu(3)}>
                     <Link href="/about" passHref>
                       About
                     </Link>

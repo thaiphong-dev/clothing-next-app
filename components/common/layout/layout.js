@@ -12,22 +12,25 @@ export default function Layout({ children }) {
   const asPath = useRouter();
 
   const addToCart = (product) => {
-    var index = cartItems.findIndex((item) => item.id === product.id);
+    var index = cartItems.findIndex((item) => item.productId === product.productId);
     if (localStorage.getItem("token") == "undefined" || localStorage.getItem("token") == "" || localStorage.getItem("token") == null) {
       console.log("Chua Co Token")
       localStorage.setItem("token", "");
       asPath.push("/login");
     }
+    console.log("cartItems", cartItems, "product", product, "dk", cartItems.find(((item) => item?.size === product?.size)) );
     if (index != -1) {
-      cartItems[index].amount++;
+      if (cartItems.find(((item) => item.size === product.size))){
+        cartItems[index].amount++;
+      } else
+      setCartItems((prev) => [...prev, product]);
     } else {
-      product.amount++;
       setCartItems((prev) => [...prev, product]);
     }
   };
   const value = {
-    cartItems,
-    setCartItems,
+    cartItems: cartItems,
+    setCartItems: setCartItems,
     addToCart,
     showQV,
     setShowQV,

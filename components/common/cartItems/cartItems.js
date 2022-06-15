@@ -6,21 +6,21 @@ import Image from "next/image";
 const Cartitems = () => {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
-  const valueContext = useContext(cartItemsContext);
+  const cartContext = useContext(cartItemsContext);
   const totalContext = useContext(totalPriceCT);
-  const changeValueProduct = (calc, id) => {
-    var index = valueContext.cartItems.findIndex((item) => item.id === id);
+  const changeValueProduct = (calc, productId) => {
+    var index = cartContext.cartItems.findIndex((item) => item.productId === productId);
     if (calc === "+") {
-      valueContext.cartItems[index].amount++;
-    } else if (calc === "-" && valueContext.cartItems[index].amount > 1) {
-      valueContext.cartItems[index].amount--;
+      cartContext.cartItems[index].amount++;
+    } else if (calc === "-" && cartContext.cartItems[index].amount > 1) {
+      cartContext.cartItems[index].amount--;
     }
     forceUpdate();
   };
 
   const totalPrice = () => {
     var price = 0;
-    valueContext.cartItems.forEach((item) => {
+    cartContext.cartItems.forEach((item) => {
       price += item.price * item.amount;
     });
     totalContext.setTotalPrice(price);
@@ -30,31 +30,37 @@ const Cartitems = () => {
     totalPrice();
   });
 
-  const deleteItem = (id) => {
-    valueContext.setCartItems(
-      valueContext.cartItems.filter((item) => item.id != id)
+  const deleteItem = (productId) => {
+    cartContext.setCartItems(
+      cartContext.cartItems.filter((item) => item.productId != productId)
     );
-    console.log(valueContext.setCartItems);
+    console.log(cartContext.setCartItems);
   };
 
   useEffect(() => {}, [forceUpdate]);
+
+  useEffect(() => {
+    console.log(" cartContext.cartItems",  cartContext.cartItems);
+  }, [cartContext.cartItems]);
   return (
     <>
-      {valueContext.cartItems.map((item, index) => (
+      {cartContext.cartItems.map((item, index) => (
         <tr className="table_row" key={index}>
           <td className="column-1">
-            <div className="how-itemcart1" onClick={() => deleteItem(item.id)}>
-              <Image src={item.img} alt="IMG" />
+            <div className="how-itemcart1" onClick={() => deleteItem(item.productId)}>
+              {/* <Image src={item.img} alt="IMG" /> */}
+              {/* delete */}
             </div>
           </td>
           <td className="column-2">{item.name}</td>
-          <td className="column-3">${item.price}</td>
+          <td className="column-2">{item.price} VNĐ</td>
+          <td className="column-2">{item.size}</td>
           <td className="column-4">
             <div className="wrap-num-product flex-w m-l-auto m-r-0">
               <div
                 className="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
                 onClick={() => {
-                  changeValueProduct("-", item.id);
+                  changeValueProduct("-", item.productId);
                   totalPrice();
                 }}
               >
@@ -69,7 +75,7 @@ const Cartitems = () => {
               <div
                 className="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
                 onClick={() => {
-                  changeValueProduct("+", item.id);
+                  changeValueProduct("+", item.productId);
                   totalPrice();
                 }}
               >
@@ -77,7 +83,7 @@ const Cartitems = () => {
               </div>
             </div>
           </td>
-          <td className="column-5">${item.price * item.amount}</td>
+          <td className="column-4">{item.price * item.amount} VNĐ</td>
         </tr>
       ))}
     </>

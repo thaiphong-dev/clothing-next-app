@@ -9,17 +9,17 @@ import { cartItemsContext } from "../layout/layout";
 import Alert from "react-bootstrap/Alert";
 import ProductsApi from "./../../../public/api/productsApi";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 const Modal = (props) => {
-  const valueContext = useContext(cartItemsContext);
+  const cartContext = useContext(cartItemsContext);
   const [valueProduct, setValueProduct] = useState(1);
   const [isalert, setIsalert] = useState(false);
   const [product, setProduct] = useState();
   const [detailProduct, setDetailProduct] = useState([]);
   const [listSize, setListSize] = useState([{}]);
   const [checked, setChecked] = useState(false);
-  const [radioValue, setRadioValue] = useState('1');
+  const [radioValue, setRadioValue] = useState("1");
 
   const fetchProduct = async (id) => {
     const response = await ProductsApi.getAllProduct();
@@ -29,15 +29,15 @@ const Modal = (props) => {
 
   const getSizeProduct = () => {
     if (detailProduct !== undefined) {
-      const temp = detailProduct?.find((item) => item._id === props.idQV);
-      setProduct(temp);
-      const temp2 = temp?.productInfo?.map((item, index) => {
+      const product = detailProduct?.find((item) => item._id === props.idQV);
+      setProduct(product);
+      const listSize = product?.productInfo?.map((item, index) => {
         return {
           name: item.size,
           value: item.size,
         };
       });
-      setListSize(temp2);
+      setListSize(listSize);
     }
   };
 
@@ -47,10 +47,11 @@ const Modal = (props) => {
   }, [props.idQV]);
 
   return (
-    <>
+
       <div
+      key={Math.random()}
         className={
-          valueContext.showQV
+          cartContext.showQV
             ? "wrap-modal1 js-modal1 show-modal1"
             : "wrap-modal1 js-modal1"
         }
@@ -67,7 +68,10 @@ const Modal = (props) => {
                   marginRight: "-35px",
                   padding: "5px",
                 }}
-                onClick={() => { valueContext.setShowQV(false); setValueProduct(1) }}
+                onClick={() => {
+                  cartContext.setShowQV(false);
+                  setValueProduct(1);
+                }}
               />
             </button>
             <div className="row">
@@ -104,31 +108,37 @@ const Modal = (props) => {
               </div>
               <div className="col-md-6 col-lg-5 p-b-30">
                 <div className="p-r-50 p-t-5 p-lr-0-lg">
-                  <h4 className="mtext-105 cl2 js-name-detail p-b-14" style={{ paddingTop: "15px" }}>
+                  <h4
+                    className="mtext-105 cl2 js-name-detail p-b-14"
+                    style={{ paddingTop: "15px" }}
+                  >
                     {product?.productname}
                   </h4>
-                  <span className="mtext-106 cl2">
-                    {product?.price}{" "}
-                  </span>
-                  <p className="stext-102 cl3 p-t-23">
-                    {product?.preview}
-                  </p>
+                  <span className="mtext-106 cl2">{product?.price} </span>
+                  <p className="stext-102 cl3 p-t-23">{product?.preview}</p>
                   <div className="p-t-33">
                     <div className="flex-w flex-r-m p-b-10">
                       <div className="size-203 flex-c-m respon6">Size</div>
                       <div className="size-204 respon6-next">
-                        <div className="rs1-select2 bor8 bg0" style={{ width: "fit-content" }}>
+                        <div
+                          className="rs1-select2 bor8 bg0"
+                          style={{ width: "fit-content" }}
+                        >
                           <ButtonGroup>
                             {listSize?.map((radio, idx) => (
                               <ToggleButton
                                 key={idx}
                                 id={`radio-${idx}`}
                                 type="radio"
-                                variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+                                variant={
+                                  idx % 2 ? "outline-success" : "outline-danger"
+                                }
                                 name="radio"
                                 value={radio.value}
                                 checked={radioValue === radio.value}
-                                onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                onChange={(e) =>
+                                  setRadioValue(e.currentTarget.value)
+                                }
                                 style={{ margin: "0 5px" }}
                               >
                                 {radio.name}
@@ -155,12 +165,14 @@ const Modal = (props) => {
                               }
                             }}
                           >
-                            <i
-                              className="fs-16 zmdi zmdi-minus"
-
-                            ></i>
+                            <i className="fs-16 zmdi zmdi-minus"></i>
                           </div>
-                          <div className="mtext-104 cl3 txt-center num-product" style={{ paddingTop: "9px" }}>{valueProduct}</div>
+                          <div
+                            className="mtext-104 cl3 txt-center num-product"
+                            style={{ paddingTop: "9px" }}
+                          >
+                            {valueProduct}
+                          </div>
                           <div
                             className="
                           btn-num-product-up
@@ -169,13 +181,9 @@ const Modal = (props) => {
                           trans-04
                           flex-c-m
                         "
-                            onClick={() =>
-                              setValueProduct(valueProduct + 1)
-                            }
+                            onClick={() => setValueProduct(valueProduct + 1)}
                           >
-                            <i
-                              className="fs-16 zmdi zmdi-plus"
-                            ></i>
+                            <i className="fs-16 zmdi zmdi-plus"></i>
                           </div>
                         </div>
                         <button
@@ -192,14 +200,20 @@ const Modal = (props) => {
                         js-addcart-detail
                       "
                           onClick={() => {
-                            //valueContext.addToCart(valueContext.itemQV);
                             console.log("id Product: ", props.idQV);
                             console.log("Size: ", radioValue);
                             console.log("amount Product: ", valueProduct);
+                            cartContext.addToCart({
+                              productId: product?._id,
+                              name: product?.productname,
+                              price: product?.price,
+                              size: radioValue,
+                              amount: valueProduct,
+                            });
                             setIsalert(true);
                             setTimeout(() => {
                               setIsalert(false);
-                              valueContext.setShowQV(false);
+                              cartContext.setShowQV(false);
                             }, 2000);
                           }}
                         >
@@ -219,7 +233,7 @@ const Modal = (props) => {
           </div>
         </div>
       </div>
-    </>
+
   );
 };
 

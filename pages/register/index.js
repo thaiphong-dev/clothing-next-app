@@ -15,14 +15,25 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import userApi from "./../../public/api/usersApi";
+import orderApi from "../../public/api/orderApi";
+import cartApi from "../../public/api/cartApi";
 
 const Register = () => {
   const router = useRouter();
+  const orderTemap = {
 
+  }
+  const cartTemp = {
+    
+  }
   const fetchRegisterUser = async (param) => {
     try {
       const response = await userApi.registerUser(param);
       console.log(response);
+      if(response?.status === "200") {
+        const createOrder = await orderApi.registerUser(orderTemap);
+        const createCart = await cartApi.registerUser(cartTemp);
+      }
       router.push("/login");
     } catch (error) {
       console.log("Err : ", error);

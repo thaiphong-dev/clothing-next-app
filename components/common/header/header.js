@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cartItemsContext } from "../layout/layout";
 
 export default function Header() {
-  const valueContext = useContext(cartItemsContext);
+  const cartContext = useContext(cartItemsContext);
   const [scroll, setScroll] = useState("wrap-menu-desktop");
   const [activeMenu, setActiveMenu] = useState(1);
   const scrolled = () => {
@@ -58,7 +58,7 @@ export default function Header() {
                 <Link href="/cart" passHref>
                   <div
                     className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                    data-notify={valueContext.cartItems.length}
+                    data-notify={cartContext.cartItems.length}
                   >
                     <i className="zmdi zmdi-shopping-cart"></i>
                   </div>
@@ -88,7 +88,7 @@ export default function Header() {
             <Link href="/cart" passHref>
               <div
                 className="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-                data-notify={valueContext.cartItems.length}
+                data-notify={cartContext.cartItems.length}
               >
                 <i className="zmdi zmdi-shopping-cart"></i>
               </div>

@@ -18,7 +18,9 @@ const Login = () => {
   const login = async (param) => {
     try {
       const response = await userApi.login(param);
+      console.log("login res", response);
       localStorage.setItem("token", response.accessToken);
+      localStorage.setItem("userId", response?.userData?.id);
       router.push("/");
     } catch (error) {
       console.log(error);

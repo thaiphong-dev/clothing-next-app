@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
@@ -7,13 +7,13 @@ import Head from "next/head";
 export const totalPriceCT = createContext();
 
 const Index = () => {
+  
   const [totalPrice, setTotalPrice] = useState(0);
   const options = [
     { value: "USA", label: "USA", id: "01" },
     { value: "UK", label: "UK", id: "02" },
   ];
   const value = { totalPrice, setTotalPrice };
-
   return (
     <totalPriceCT.Provider value={value}>
       <Head>
@@ -40,11 +40,12 @@ const Index = () => {
                   <table className="table-shopping-cart">
                     <tbody>
                       <tr className="table_head">
-                        <th className="column-1">Product</th>
-                        <th className="column-2"></th>
+                      <th className="column-1"></th>
+                        <th className="column-2">Product</th>
                         <th className="column-3">Price</th>
+                        <th className="column-3">size</th>
                         <th className="column-4">Quantity</th>
-                        <th className="column-5">Total</th>
+                        <th className="column-4">Total</th>
                       </tr>
                     </tbody>
                     <Cartitems />
@@ -52,15 +53,6 @@ const Index = () => {
                 </div>
                 <div className="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                   <div className="flex-w flex-m m-r-20 m-tb-5">
-                    <input
-                      className="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5"
-                      type="text"
-                      name="coupon"
-                      placeholder="Coupon Code"
-                    />
-                    <div className="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                      Apply coupon
-                    </div>
                   </div>
                   <div className="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                     Update Cart
@@ -134,7 +126,7 @@ const Index = () => {
           </div>
         </div>
       </form>
-    </totalPriceCT.Provider>
+      </totalPriceCT.Provider>
   );
 };
 export default Index;

@@ -7,7 +7,7 @@ import Modal from "./modal";
 import ProductsApi from "../../../public/api/productsApi";
 
 const Product = (props) => {
-  const valueContext = useContext(cartItemsContext);
+  const cartContext = useContext(cartItemsContext);
   const [indexhv, setindehv] = useState("");
   const [ishover, setishover] = useState(false);
   const [isfilter, setisfilter] = useState(false);
@@ -17,6 +17,7 @@ const Product = (props) => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [productItems, setProductItems] = useState();
   const [idQV, setIdQV] = useState("");
+  const [detailProduct, setDetailProduct] = useState()
 
   const hoverImg = (index) => {
     setishover(true);
@@ -383,9 +384,10 @@ const Product = (props) => {
                         js-show-modal1
                       "
                         onClick={() => {
-                          valueContext.setShowQV(true);
-                          valueContext.setItemQV(item);
+                          cartContext.setShowQV(true);
+                          cartContext.setItemQV(item);
                           setIdQV(item._id);
+                          setDetailProduct(item)
                         }}
                       >
                         Quick View

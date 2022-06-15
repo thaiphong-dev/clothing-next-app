@@ -21,7 +21,7 @@ const userApi = {
     return axiosClient.put(url, param);
   },
   registerUser: (param) => {
-    const url = `/users`;
+    const url = `/signup`;
     return axiosClient.post(url, param);
   },
 };

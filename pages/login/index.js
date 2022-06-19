@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import userApi from "./../../public/api/usersApi";
+import { useEffect, useState } from "react";
 
 const Login = () => {
   const router = useRouter();
@@ -42,8 +43,58 @@ const Login = () => {
     },
   });
 
+
+  const imageUpload = (e) => {
+    console.log("called");
+    var fileIn = e.target;
+    var file = fileIn.files[0];
+    if (file && file.size < 5e6) {
+        const formData = new FormData();
+
+        formData.append("image", file);
+        try {
+          fetch("https://api.imgur.com/3/upload", {
+            method: "POST",
+            headers: {
+                Authorization: "Client-ID c41137647408899",
+                Accept: "application/json",
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                e.preventDefault();
+                console.log(response);
+                console.log(response.data.link);
+                url_in = response.data.link;
+            });
+        } catch (error) {
+          console.log(error);
+        }
+        
+    } else {
+        console.error("oversized file");
+    }
+}
+
+
+  const [file, setFile] = useState();
+  function handleChange(e) {
+      console.log(e.target.files);
+      setFile(URL.createObjectURL(e.target.files[0]));
+  }
+
+  useEffect(() => {
+    console.log("file", file);
+
+  }, [file]);
   return (
     <>
+    <div>
+      <h2>Add Image:</h2>
+            <input type="file" onChange={imageUpload} />
+            <img src={file} />
+      </div>
       <Head>
         <title>COZA STORE | Login</title>
       </Head>

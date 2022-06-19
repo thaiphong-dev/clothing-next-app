@@ -2,19 +2,27 @@
   "name": "clothing-next-app",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -- -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "start": " PORT=8000 react-scripts start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.3",
     "antd": "^4.20.2",
+    "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
+    "formik": "^2.2.9",
+    "material": "^0.4.3",
+    "mui": "^0.0.1",
     "next": "12.0.7",
+    "query-string": "^7.1.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.3.1",
     "react-dom": "17.0.2",
-    "react-select": "^5.3.1"
+    "react-select": "^5.3.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "eslint": "8.6.0",

@@ -1,6 +1,9 @@
 {
   "name": "clothing-next-app",
   "private": true,
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "dev": "next dev -- -H 0.0.0.0",
     "build": "next build",

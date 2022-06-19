@@ -2,10 +2,11 @@
   "name": "clothing-next-app",
   "private": true,
   "scripts": {
-    "dev": "next dev -- -H 0.0.0.0",
+    "dev": "next dev",
     "build": "next build",
-    "start": " PORT=8000 react-scripts start",
-    "lint": "next lint"
+    "start": " next start",
+    "lint": "next lint",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@emotion/styled": "^11.9.3",

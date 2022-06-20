@@ -52,7 +52,7 @@ const Modal = (props) => {
     <div
       key={Math.random()}
       className={
-        cartContext?.showQV
+        cartContext.showQV
           ? "wrap-modal1 js-modal1 show-modal1"
           : "wrap-modal1 js-modal1"
       }

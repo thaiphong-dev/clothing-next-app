@@ -22,7 +22,7 @@ const Cartitems = () => {
   };
 
   const totalPrice = () => {
-    var price = 23000;
+    var price = 0;
     cartContext.cartItems.forEach((item) => {
       price += item.price * item.amount;
     });

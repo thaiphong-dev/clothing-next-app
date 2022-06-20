@@ -79,10 +79,10 @@ export default function Header() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="/account">Account</Dropdown.Item>
-                    <Dropdown.Item href="/yourorder">Your Order</Dropdown.Item>
+                    <Dropdown.Item href="/account">Tài Khoản</Dropdown.Item>
+                    <Dropdown.Item href="/yourorder">Đơn Mua</Dropdown.Item>
                     <Dropdown.Item href="/login" style={{ color: "red" }}>
-                      Log Out
+                      Đăng Xuất
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

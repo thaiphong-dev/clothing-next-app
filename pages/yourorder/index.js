@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import Head from "next/head";
 import Modal from "react-bootstrap/Modal";
 import ProductsApi from "./../../public/api/productsApi";
+import Select from "react-select";
+import Alert from "react-bootstrap/Alert";
 
 function MyVerticallyCenteredModal(props) {
   const [detailOrder, setDetailOrder] = useState();
@@ -60,7 +62,9 @@ function MyVerticallyCenteredModal(props) {
           <thead>
             <tr>
               <th>#</th>
+              <th>Image</th>
               <th>Name Product</th>
+              <th>Size</th>
               <th>Price</th>
               <th>Amount</th>
               <th>Total Price</th>
@@ -70,17 +74,19 @@ function MyVerticallyCenteredModal(props) {
             {detailOrder?.map((item, index) => (
               <tr key={index}>
                 <td>{index}</td>
-                <td>{item.productId}</td>
+                <td>image</td>
+                <td>{item.name}</td>
+                <td>{item.size}</td>
                 <td>{format2(item.price, "vnd")}</td>
                 <td>{item.amount}</td>
                 <td>{format2(item.totalPrice, "vnd")}</td>
               </tr>
             ))}
             <tr>
-              <td colSpan={4} style={{ color: "red" }}>
-                Total:
+              <td colSpan={6} style={{ color: "red" }}>
+                Total + Shipping (23.000VND):
               </td>
-              <td>{format2(totalPriceOrder, "vnd")}</td>
+              <td>{format2(totalPriceOrder + 23000, "vnd")}</td>
             </tr>
           </tbody>
         </Table>
@@ -96,6 +102,17 @@ export default function Yourorder() {
   const [listOrder, setListOrder] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [orderID, setOrderID] = useState();
+  const [statusFilter, setStatusFilter] = useState({
+    value: "Pending",
+    label: "Pending",
+    id: 0,
+  });
+
+  const options = [
+    { value: "Pending", label: "Pending", id: 0 },
+    { value: "Shipping", label: "Shipping", id: 1 },
+    { value: "Received", label: "Received", id: 2 },
+  ];
 
   const fetchListProduct = async (param) => {
     try {
@@ -119,9 +136,36 @@ export default function Yourorder() {
     return sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,") + " " + "VND";
   };
 
+  const getStatus = (status) => {
+    if (status === 0) {
+      return (
+        <Alert key={"dark"} variant={"dark"} style={{ width: "fit-content" }}>
+          Pending
+        </Alert>
+      );
+    } else if (status === 1) {
+      return (
+        <Alert key={"info"} variant={"info"} style={{ width: "fit-content" }}>
+          Shipping
+        </Alert>
+      );
+    } else {
+      return (
+        <Alert
+          key={"danger"}
+          variant={"danger"}
+          style={{ width: "fit-content" }}
+        >
+          Received
+        </Alert>
+      );
+    }
+  };
+
   useEffect(() => {
     fetchListProduct(localStorage.getItem("userId"));
-  }, []);
+    console.log(statusFilter);
+  }, [statusFilter]);
 
   return (
     <>
@@ -130,6 +174,13 @@ export default function Yourorder() {
       </Head>
       <Container fluid>
         <h1>Your Order</h1>
+        <Select
+          id="selectbox"
+          instanceId="selectbox"
+          options={options}
+          defaultValue={options[0]}
+          onChange={setStatusFilter}
+        />
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -141,27 +192,31 @@ export default function Yourorder() {
             </tr>
           </thead>
           <tbody>
-            {listOrder?.map((item, index) => (
-              <tr key={index} style={{ padding: "3px 0" }}>
-                <td>{sliceDay(item.paymentDate)}</td>
-                <td>{item.detail?.length}</td>
-                <td>{item.status}</td>
-                <td>{sumPrice(item)}</td>
-                <td>
-                  <Button
-                    variant="info"
-                    style={{ backgroundColor: "#0dcaf0" }}
-                    onClick={() => {
-                      setModalShow(true);
-                      setOrderID(item._id);
-                      console.log(orderID);
-                    }}
-                  >
-                    Info
-                  </Button>
-                </td>
-              </tr>
-            ))}
+            {listOrder?.map((item, index) => {
+              if (item.status === statusFilter.id) {
+                return (
+                  <tr key={index} style={{ padding: "3px 0" }}>
+                    <td>{sliceDay(item.paymentDate)}</td>
+                    <td>{item.detail?.length}</td>
+                    <td>{getStatus(item.status)}</td>
+                    <td>{sumPrice(item)}</td>
+                    <td>
+                      <Button
+                        variant="info"
+                        style={{ backgroundColor: "#0dcaf0" }}
+                        onClick={() => {
+                          setModalShow(true);
+                          setOrderID(item._id);
+                          console.log(orderID);
+                        }}
+                      >
+                        Info
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              }
+            })}
           </tbody>
         </Table>
       </Container>

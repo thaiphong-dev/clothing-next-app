@@ -20,17 +20,22 @@ import cartApi from "../../public/api/cartApi";
 
 const Register = () => {
   const router = useRouter();
-  const orderTemap = {
-
-  }
-  const cartTemp = {
-    
-  }
+  const orderTemap = {};
+  const cartTemp = {};
   const fetchRegisterUser = async (param) => {
     try {
-      const response = await userApi.registerUser(param);
+      const payload = {
+        email: "string",
+        fullname: "string",
+        password: "string",
+        username: "string",
+        contact: "string",
+        address: "string",
+        userRole: "admin",
+      };
+      const response = await userApi.registerUser(payload);
       console.log(response);
-      if(response?.status === "200") {
+      if (response?.status === "200") {
         const createOrder = await orderApi.registerUser(orderTemap);
         const createCart = await cartApi.registerUser(cartTemp);
       }
@@ -78,7 +83,7 @@ const Register = () => {
         style={{ paddingTop: "5%" }}
       >
         <Container maxWidth="sm">
-          <NextLink href="/" passHref>
+          <NextLink href="/login" passHref>
             <Button
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}

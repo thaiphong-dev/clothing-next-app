@@ -37,24 +37,25 @@ export default function Account() {
 
   const UpdateUser = async () => {
     const payload = {
-      fullname: fulln,
+      fullname: fulln ?? infoUser[0]?.fullname,
       avatar: "",
       username: infoUser[0]?.username,
-      contact: phone,
-      address: addr,
+      contact: phone ?? infoUser[0]?.contact,
+      address: addr ?? infoUser[0]?.address,
     };
-    console.log("payload", payload)
+    console.log("payload", payload);
     try {
       const response = await userApi.updateUserByID(
         localStorage.getItem("userId"),
         payload
       );
       console.log(response);
-      router.push("/");
+      router.push("/account");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Container style={{ margin: "50px 100px" }}>
       {infoUser?.map((item) => (
@@ -136,7 +137,6 @@ export default function Account() {
                         name="email"
                         defaultValue={values.phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        isInvalid={touched.phone && !errors.phone}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.phone}
@@ -158,7 +158,6 @@ export default function Account() {
                         name="email"
                         defaultValue={values.address}
                         onChange={(e) => setAddr(e.target.value)}
-                        isInvalid={touched.address && !errors.address}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.address}

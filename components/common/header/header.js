@@ -4,6 +4,7 @@ import logo1 from "./../../../public/images/icons/logo-01.png";
 import iconClose2 from "./../../../public/images/icons/icon-close2.png";
 import Link from "next/link";
 import { cartItemsContext } from "../layout/layout";
+import Dropdown from "react-bootstrap/Dropdown";
 
 export default function Header() {
   const cartContext = useContext(cartItemsContext);
@@ -30,23 +31,32 @@ export default function Header() {
           <div className={scroll}>
             <nav className="limiter-menu-desktop container">
               {/* <!-- Logo desktop -->		 */}
-              <a href="#" className="logo">
+              <a href="/" className="logo">
                 <Image src={logo1} alt="IMG-LOGO-DESKTOP" />
               </a>
               {/* <!-- Menu desktop --> */}
               <div className="menu-desktop">
                 <ul className="main-menu">
-                  <li className={(activeMenu === 1) ? "active-menu" : ""} onClick={() => setActiveMenu(1)}>
+                  <li
+                    className={activeMenu === 1 ? "active-menu" : ""}
+                    onClick={() => setActiveMenu(1)}
+                  >
                     <Link href="/" passHref>
                       Home
                     </Link>
                   </li>
-                  <li className={(activeMenu === 2) ? "active-menu" : ""} onClick={() => setActiveMenu(2)}>
+                  <li
+                    className={activeMenu === 2 ? "active-menu" : ""}
+                    onClick={() => setActiveMenu(2)}
+                  >
                     <Link href="/shop" passHref>
                       Shop
                     </Link>
                   </li>
-                  <li className={(activeMenu === 3) ? "active-menu" : ""} onClick={() => setActiveMenu(3)}>
+                  <li
+                    className={activeMenu === 3 ? "active-menu" : ""}
+                    onClick={() => setActiveMenu(3)}
+                  >
                     <Link href="/about" passHref>
                       About
                     </Link>
@@ -63,11 +73,19 @@ export default function Header() {
                     <i className="zmdi zmdi-shopping-cart"></i>
                   </div>
                 </Link>
-                <Link href="/login" passHref>
-                  <div className="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-                    <i className="zmdi zmdi-account"></i>
-                  </div>
-                </Link>
+                <Dropdown>
+                  <Dropdown.Toggle variant="light" id="dropdown-basic">
+                    <i className="zmdi zmdi-account zmdi-hc-lg" size="10px"></i>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="/account">Tài Khoản</Dropdown.Item>
+                    <Dropdown.Item href="/yourorder">Đơn Mua</Dropdown.Item>
+                    <Dropdown.Item href="/login" style={{ color: "red" }}>
+                      Đăng Xuất
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </nav>
           </div>

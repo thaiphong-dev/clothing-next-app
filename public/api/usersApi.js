@@ -12,13 +12,13 @@ const userApi = {
     const url = `/auth/signin`;
     return axiosClient.post(url, param);
   },
-  getUser: () => {
-    const url = "/api/v1/user";
+  getUserById: (param) => {
+    const url = `/users/${param}`;
     return axiosClient.get(url);
   },
-  updateUser: (param) => {
-    const url = "/api/v1/user/update";
-    return axiosClient.put(url, param);
+  updateUserByID: (id, param) => {
+    const url = `/users/${id}`;
+    return axiosClient.post(url, param);
   },
   registerUser: (param) => {
     const url = `/signup`;

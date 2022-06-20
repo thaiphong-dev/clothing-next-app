@@ -32,9 +32,7 @@ const Login = () => {
       password: "123123123",
     },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .max(255)
-        .required("Username is required"),
+      email: Yup.string().max(255).required("Username is required"),
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: (e) => {

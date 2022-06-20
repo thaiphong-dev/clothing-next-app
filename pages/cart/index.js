@@ -2,18 +2,72 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
+import { useRouter } from "next/router";
 import Head from "next/head";
+import cartApi from "../../public/api/cartApi";
+import userApi from "../../public/api/usersApi";
+import Alert from "react-bootstrap/Alert";
+import orderApi from "../../public/api/orderApi";
 
 export const totalPriceCT = createContext();
 
 const Index = () => {
-  
+  const router = useRouter();
+  const cartContext = useContext(cartItemsContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const options = [
-    { value: "USA", label: "USA", id: "01" },
-    { value: "UK", label: "UK", id: "02" },
-  ];
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [infoUser, setInfouser] = useState();
   const value = { totalPrice, setTotalPrice };
+  const options = [
+    { value: "Hồ Chí Minh", label: "Hồ Chí Minh", id: "01" },
+    { value: "Hà Nội", label: "Hà Nội", id: "02" },
+  ];
+  const fetchInfoUser = async () => {
+    const response = await userApi.getUserById(localStorage.getItem("userId"));
+    setInfouser(response);
+  };
+
+  const checkOut = async () => {
+    if (city !== "" && address !== "") {
+      const payload = {
+        userId: infoUser[0]?._id,
+        username: infoUser[0]?.username,
+        fullname: infoUser[0]?.fullname,
+        email: infoUser[0]?.email,
+        country: city[0]?.value,
+        address: address,
+        contact: infoUser[0]?.contact,
+        detail: cartContext.cartItems,
+        paymentAddress: city?.value + " " + address,
+        paymentType: "Cash",
+        status: 0,
+      };
+      const response = await orderApi.createOrder(payload);
+      console.log(response);
+      if (response === "order was added successfully!") {
+        const payloadCart = {
+          detail: [],
+          status: 0,
+        };
+        const response = await cartApi.updateCartByID(
+          localStorage.getItem("cartId"),
+          payloadCart
+        );
+        console.log("payload", payload);
+        cartContext.getListCart();
+        router.push("/yourorder");
+      }
+    }
+    console.log(city);
+    console.log(address);
+  };
+
+  useEffect(() => {
+    if (infoUser === undefined) fetchInfoUser();
+    console.log(infoUser);
+  }, [infoUser]);
+
   return (
     <totalPriceCT.Provider value={value}>
       <Head>
@@ -40,7 +94,7 @@ const Index = () => {
                   <table className="table-shopping-cart">
                     <tbody>
                       <tr className="table_head">
-                      <th className="column-1"></th>
+                        <th className="column-1"></th>
                         <th className="column-2">Product</th>
                         <th className="column-3">Price</th>
                         <th className="column-3">size</th>
@@ -52,9 +106,21 @@ const Index = () => {
                   </table>
                 </div>
                 <div className="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                  <div className="flex-w flex-m m-r-20 m-tb-5">
-                  </div>
-                  <div className="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                  <div className="flex-w flex-m m-r-20 m-tb-5"></div>
+                  <div
+                    className="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                    onClick={async () => {
+                      const payload = {
+                        detail: cartContext.cartItems,
+                        status: 0,
+                      };
+                      const response = await cartApi.updateCartByID(
+                        localStorage.getItem("cartId"),
+                        payload
+                      );
+                      console.log("update cart ok", payload);
+                    }}
+                  >
                     Update Cart
                   </div>
                 </div>
@@ -83,7 +149,12 @@ const Index = () => {
                     <div className="p-t-15">
                       <span className="stext-112 cl8">Calculate Shipping</span>
                       <div className="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                        <Select instanceId="area" options={options} />
+                        <Select
+                          id="selectbox"
+                          instanceId="selectbox"
+                          options={options}
+                          onChange={setCity}
+                        />
                         <div className="dropDownSelect2"></div>
                       </div>
                       <div className="bor8 bg0 m-b-12">
@@ -91,25 +162,19 @@ const Index = () => {
                           className="stext-111 cl8 plh3 size-111 p-lr-15"
                           type="text"
                           name="state"
-                          placeholder="State /  country"
+                          onChange={(e) => setAddress(e.target.value)}
+                          placeholder="No /  Street / District"
                         />
-                      </div>
-                      <div className="bor8 bg0 m-b-22">
-                        <input
-                          className="stext-111 cl8 plh3 size-111 p-lr-15"
-                          type="text"
-                          name="postcode"
-                          placeholder="Postcode / Zip"
-                        />
-                      </div>
-                      <div className="flex-w">
-                        <div className="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                          Update Totals
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                {city === "" ? (
+                  <Alert variant="danger">Please Chose City !!!</Alert>
+                ) : null}
+                {address === "" ? (
+                  <Alert variant="danger">Please Input Your Address !!!</Alert>
+                ) : null}
                 <div className="flex-w flex-t p-t-27 p-b-33">
                   <div className="size-208">
                     <span className="mtext-101 cl2">Total:</span>
@@ -118,15 +183,18 @@ const Index = () => {
                     <span className="mtext-110 cl2">${totalPrice}</span>
                   </div>
                 </div>
-                <button className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                <div
+                  className="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                  onClick={checkOut}
+                >
                   Proceed to Checkout
-                </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </form>
-      </totalPriceCT.Provider>
+    </totalPriceCT.Provider>
   );
 };
 export default Index;

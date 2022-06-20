@@ -5,6 +5,7 @@ import { cartItemsContext } from "../layout/layout";
 import image from "../../../public/images/product-01.jpg";
 import Modal from "./modal";
 import ProductsApi from "../../../public/api/productsApi";
+import cartApi from "../../../public/api/cartApi";
 
 const Product = (props) => {
   const cartContext = useContext(cartItemsContext);
@@ -81,12 +82,11 @@ const Product = (props) => {
   const fetchProduct = async () => {
     const response = await ProductsApi.getAllProduct();
     setProductItems(response.product);
-    console.log("product Item:", productItems);
   };
 
   useEffect(() => {
     fetchProduct();
-    console.log("product Item:", productItems);
+    
   }, []);
 
   const tagsFilter = [

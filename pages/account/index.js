@@ -16,12 +16,13 @@ export default function Account() {
   const [fulln, setFulln] = useState();
   const [phone, setPhone] = useState();
   const [addr, setAddr] = useState();
-  const [update, setUpdate] = useState(false);
+  const [avatar, setAvatar] = useState("");
 
   const fetchInfoUser = async () => {
     const response = await userApi.getUserById(localStorage.getItem("userId"));
     setInfoUser(response);
-    console.log(response);
+    console.log(infoUser);
+    setAvatar(response?.[0].avatar);
   };
   useEffect(() => {
     fetchInfoUser();
@@ -35,13 +36,45 @@ export default function Account() {
     address: yup.string().required(),
   });
 
+  const imageUpload = async (e) => {
+    console.log("called");
+    var fileIn = e.target;
+    var file = fileIn.files[0];
+    if (file && file.size < 5e6) {
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("upload_preset", "thaiphong");
+
+      try {
+        let res = await fetch(
+          "https://api.cloudinary.com/v1_1/dxsta80ho/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            e.preventDefault();
+            console.log(response.secure_url);
+            setAvatar(response.secure_url);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.error("oversized file");
+    }
+  };
+
   const UpdateUser = async () => {
     const payload = {
-      fullname: fulln ?? infoUser[0]?.fullname,
+      fullname: fulln,
       avatar: "",
       username: infoUser[0]?.username,
-      contact: phone ?? infoUser[0]?.contact,
-      address: addr ?? infoUser[0]?.address,
+      contact: phone,
+      address: addr,
     };
     console.log("payload", payload);
     try {
@@ -50,17 +83,33 @@ export default function Account() {
         payload
       );
       console.log(response);
-      router.push("/account");
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <Container style={{ margin: "50px 100px" }}>
       {infoUser?.map((item) => (
         <div key={item._id}>
-          <h1>Your ID: {infoUser[0]?._id}</h1>
+          <h1 style={{ display: "flex" }}>
+            {avatar !== "" ? (
+              <img
+                src="https://res.cloudinary.com/dxsta80ho/image/upload/v1655759888/thaiphong/o316lmxyr54wujghnzzh.jpg"
+                alt="Avatar"
+                width={170}
+                height={170}
+              />
+            ) : (
+              <h1>Dont Have Avatar {"            "}</h1>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={imageUpload}
+              style={{ fontSize: "20px", marginLeft: "20px" }}
+            ></input>
+          </h1>
           <Formik
             validationSchema={schema}
             initialValues={{
@@ -137,6 +186,7 @@ export default function Account() {
                         name="email"
                         defaultValue={values.phone}
                         onChange={(e) => setPhone(e.target.value)}
+                        isInvalid={touched.phone && !errors.phone}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.phone}
@@ -158,6 +208,7 @@ export default function Account() {
                         name="email"
                         defaultValue={values.address}
                         onChange={(e) => setAddr(e.target.value)}
+                        isInvalid={touched.address && !errors.address}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.address}

@@ -13,18 +13,19 @@ function MyVerticallyCenteredModal(props) {
   const [totalPriceOrder, setTotalPriceOrder] = useState(0);
 
   function format2(n, currency) {
-    return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + " " +currency;
+    return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,") + " " + currency;
   }
 
   const fetchDetailOrder = async (param) => {
     try {
-        setTotalPriceOrder(0);
+      setTotalPriceOrder(0);
       const response = await orderApi.getOrderByID(param);
-      setDetailOrder(response[0].detail);
-      console.log(response[0].detail)
-      setTotalPriceOrder(response[0].detail.reduce(function(prev, current) {
-        return prev + +current.totalPrice
-      }, 0));
+      setDetailOrder(response.detail);
+      setTotalPriceOrder(
+        response.detail.reduce(function (prev, current) {
+          return prev + +current.totalPrice;
+        }, 0)
+      );
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +33,7 @@ function MyVerticallyCenteredModal(props) {
   const getProductByID = async (param) => {
     try {
       const response = await ProductsApi.getProductById(param);
-      return (response[0].productname);
+      return response[0].productname;
     } catch (error) {
       console.log(error);
     }
@@ -76,8 +77,10 @@ function MyVerticallyCenteredModal(props) {
               </tr>
             ))}
             <tr>
-            <td colSpan={4} style={{color:"red"}}>Total:</td>
-            <td>{format2(totalPriceOrder, "vnd")}</td>
+              <td colSpan={4} style={{ color: "red" }}>
+                Total:
+              </td>
+              <td>{format2(totalPriceOrder, "vnd")}</td>
             </tr>
           </tbody>
         </Table>
@@ -93,11 +96,13 @@ export default function Yourorder() {
   const [listOrder, setListOrder] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [orderID, setOrderID] = useState();
+
   const fetchListProduct = async (param) => {
     try {
       setListOrder([]);
       const response = await orderApi.getOrderByUserID(param);
-      setListOrder((prev) => [...prev, response]);
+      setListOrder(response);
+      console.log(listOrder);
     } catch (error) {
       console.log(error);
     }
@@ -105,6 +110,13 @@ export default function Yourorder() {
 
   const sliceDay = (day) => {
     return day?.slice(0, 10);
+  };
+
+  const sumPrice = (item) => {
+    let sum = item.detail?.reduce(function (prev, current) {
+      return (prev += current.totalPrice);
+    }, 0);
+    return sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,") + " " + "VND";
   };
 
   useEffect(() => {
@@ -132,9 +144,9 @@ export default function Yourorder() {
             {listOrder?.map((item, index) => (
               <tr key={index} style={{ padding: "3px 0" }}>
                 <td>{sliceDay(item.paymentDate)}</td>
-                <td>{item.detail.length}</td>
+                <td>{item.detail?.length}</td>
                 <td>{item.status}</td>
-                <td>{item.detail[0].amount}</td>
+                <td>{sumPrice(item)}</td>
                 <td>
                   <Button
                     variant="info"
@@ -142,6 +154,7 @@ export default function Yourorder() {
                     onClick={() => {
                       setModalShow(true);
                       setOrderID(item._id);
+                      console.log(orderID);
                     }}
                   >
                     Info

@@ -2757,6 +2757,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .table_row td {
   padding-bottom: 20px;
+  text-align: center;
 }
 
 .table-shopping-cart .table_row td.column-1 {
@@ -2771,6 +2772,7 @@ input.num-product::-webkit-inner-spin-button {
   line-height: 1.6;
   padding-top: 15px;
   padding-bottom: 15px;
+  text-align: center;
 }
 
 .table-shopping-cart td {

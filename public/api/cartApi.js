@@ -17,9 +17,13 @@ const cartApi = {
     return axiosClient.get(url);
   },
   updateCartByID: (id, param) => {
-    const url = `cart/${id}`;
-    return axiosClient.post(url, { param });
+    const url = `/cart/${id}`;
+    return axiosClient.post(url, param );
   },
+  deleteCartByIdUser: (id)=>{
+    const url = `cart/${id}`;
+    return axiosClient.delete(url);
+  }
 };
 
 export default cartApi;

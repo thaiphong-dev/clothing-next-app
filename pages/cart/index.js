@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
-import Select from "react-select";
 import Cartitems from "../../components/common/cartItems/cartItems";
 import { cartItemsContext } from "../../components/common/layout/layout";
 import { useRouter } from "next/router";
@@ -15,31 +14,26 @@ const Index = () => {
   const router = useRouter();
   const cartContext = useContext(cartItemsContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [infoUser, setInfouser] = useState();
   const value = { totalPrice, setTotalPrice };
-  const options = [
-    { value: "Hồ Chí Minh", label: "Hồ Chí Minh", id: "01" },
-    { value: "Hà Nội", label: "Hà Nội", id: "02" },
-  ];
   const fetchInfoUser = async () => {
     const response = await userApi.getUserById(localStorage.getItem("userId"));
     setInfouser(response);
   };
 
   const checkOut = async () => {
-    if (city !== "" && address !== "") {
+    if (address !== "") {
       const payload = {
         userId: infoUser[0]?._id,
         username: infoUser[0]?.username,
         fullname: infoUser[0]?.fullname,
         email: infoUser[0]?.email,
-        country: city[0]?.value,
+        country: "",
         address: address,
         contact: infoUser[0]?.contact,
         detail: cartContext.cartItems,
-        paymentAddress: city?.value + " " + address,
+        paymentAddress: address,
         paymentType: "Cash",
         status: 0,
       };
@@ -55,11 +49,10 @@ const Index = () => {
           payloadCart
         );
         console.log("payload", payload);
-        cartContext.getListCart();
+        cartContext.setCartItems([]);
         router.push("/yourorder");
       }
     }
-    console.log(city);
     console.log(address);
   };
 
@@ -134,7 +127,7 @@ const Index = () => {
                     <span className="stext-110 cl2">Subtotal:</span>
                   </div>
                   <div className="size-209">
-                    <span className="mtext-110 cl2">${totalPrice}</span>
+                    <span className="mtext-110 cl2">${totalPrice - 23000}</span>
                   </div>
                 </div>
                 <div className="flex-w flex-t bor12 p-t-15 p-b-30">
@@ -149,12 +142,6 @@ const Index = () => {
                     <div className="p-t-15">
                       <span className="stext-112 cl8">Calculate Shipping</span>
                       <div className="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                        <Select
-                          id="selectbox"
-                          instanceId="selectbox"
-                          options={options}
-                          onChange={setCity}
-                        />
                         <div className="dropDownSelect2"></div>
                       </div>
                       <div className="bor8 bg0 m-b-12">
@@ -169,18 +156,23 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                {city === "" ? (
-                  <Alert variant="danger">Please Chose City !!!</Alert>
-                ) : null}
                 {address === "" ? (
                   <Alert variant="danger">Please Input Your Address !!!</Alert>
                 ) : null}
+                <div className="flex-w flex-t p-t-27">
+                  <div className="size-208">
+                    <span className="mtext-101 cl2">Shipping: </span>
+                  </div>
+                  <div className="size-209 p-t-1">
+                    <span className="mtext-110 cl2">23.000 VND</span>
+                  </div>
+                </div>
                 <div className="flex-w flex-t p-t-27 p-b-33">
                   <div className="size-208">
                     <span className="mtext-101 cl2">Total:</span>
                   </div>
                   <div className="size-209 p-t-1">
-                    <span className="mtext-110 cl2">${totalPrice}</span>
+                    <span className="mtext-110 cl2">{totalPrice} VND</span>
                   </div>
                 </div>
                 <div

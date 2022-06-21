@@ -21,15 +21,19 @@ const Login = () => {
       console.log("login res", response);
       localStorage.setItem("token", response.accessToken);
       localStorage.setItem("userId", response?.userData?.id);
-      router.push("/");
+      if (response.userData.userRole === "admin") {
+        router.push("/accountadmin");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     }
   };
   const formik = useFormik({
     initialValues: {
-      email: "test1@gmail.com",
-      password: "123123123",
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().max(255).required("Username is required"),

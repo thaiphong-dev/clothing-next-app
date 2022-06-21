@@ -5,7 +5,6 @@ import Header from "../header/header";
 import { useRouter } from "next/router";
 import cartApi from "../../../public/api/cartApi";
 export const cartItemsContext = createContext();
-import DashboardLayout from "../../dashboard-layout";
 
 export default function Layout({ children }) {
   const getUserId = () => localStorage.getItem("userId");
@@ -101,14 +100,9 @@ export default function Layout({ children }) {
     }
   }, []);
 
-  if (
-    asPath.pathname === "/shop" ||
-    asPath.pathname === "/about" ||
-    asPath.pathname === "/yourorder" ||
-    asPath.pathname === "/cart" ||
-    asPath.pathname === "/account" ||
-    asPath.pathname === "/"
-  ) {
+  if (asPath.pathname === "/login" || asPath.pathname === "/register") {
+    return <>{children}</>;
+  } else {
     return (
       <cartItemsContext.Provider value={value}>
         <Header />
@@ -116,14 +110,6 @@ export default function Layout({ children }) {
         <Backtotop />
         <Footer />
       </cartItemsContext.Provider>
-    );
-  } else if (asPath.pathname === "/login") {
-    return <>{children}</>;
-  } else {
-    return (
-      <div>
-        <DashboardLayout>{children}</DashboardLayout>
-      </div>
     );
   }
 }

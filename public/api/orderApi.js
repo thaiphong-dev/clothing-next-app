@@ -5,7 +5,7 @@ const orderApi = {
     return axiosClient.post(url, param);
   },
   getListOrder: (param) => {
-    const url = "order";
+    const url = "/order";
     return axiosClient.get(url, { param });
   },
   getOrderByID: (id) => {
@@ -18,7 +18,11 @@ const orderApi = {
   },
   updateOrderByID: (id, param) => {
     const url = `order/${id}`;
-    return axiosClient.post(url, { param });
+    return axiosClient.post(url, param);
+  },
+  getAllOrder: (param) => {
+    const url = `/order?pageNumber=${param.pageNumber}&pageSize=${param.pageSize}`;
+    return axiosClient.get(url, param);
   },
 };
 

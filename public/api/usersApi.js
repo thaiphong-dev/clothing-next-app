@@ -4,10 +4,6 @@ const userApi = {
     const url = "/api/v1/users";
     return axiosClient.get(url, { param });
   },
-  findUser: (id) => {
-    const url = `/api/v1/${id}`;
-    return axiosClient.get(url);
-  },
   login: (param) => {
     const url = `/auth/signin`;
     return axiosClient.post(url, param);

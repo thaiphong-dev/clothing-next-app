@@ -24,7 +24,7 @@ export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
   const [userName, setUserName] = useState();
   const fetchUserName = async () => {
-    const response = await userApi.getUser();
+    const response = await userApi.getUserById(localStorage.getItem("userId"));
     setUserName(response.username);
     try {
     } catch (error) {}
@@ -90,7 +90,7 @@ export const DashboardNavbar = (props) => {
               cursor: "pointer",
             }}
           >
-            <NextLink className="username" href="/account">
+            <NextLink className="username" href="/accountadmin">
               {userName ? userName : ""}
             </NextLink>
           </div>

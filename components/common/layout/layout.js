@@ -117,6 +117,8 @@ export default function Layout({ children }) {
         <Footer />
       </cartItemsContext.Provider>
     );
+  } else if (asPath.pathname === "/login") {
+    return <>{children}</>;
   } else {
     return (
       <div>

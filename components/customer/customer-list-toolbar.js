@@ -8,7 +8,7 @@ import {
   SvgIcon,
   Typography,
 } from "@mui/material";
-import { Search as SearchIcon } from "../../icons/search";
+import { Search as SearchIcon } from "../../public/images/icons/search";
 
 export const CustomerListToolbar = (props) => (
   <Box {...props}>

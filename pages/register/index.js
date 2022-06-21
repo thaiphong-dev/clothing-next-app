@@ -31,7 +31,6 @@ const Register = () => {
         username: "string",
         contact: "string",
         address: "string",
-        userRole: "admin",
       };
       const response = await userApi.registerUser(payload);
       console.log(response);

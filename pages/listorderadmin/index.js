@@ -1,18 +1,16 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { CustomerListProducts } from "../../components/customer/customer-list-products";
 import { CustomerListToolbar } from "../../components/customer/customer-list-toolbar";
 import { DashboardLayout } from "../../components/dashboard-layout";
 import React, { useState, useEffect } from "react";
-import ProductsApi from "../../public/api/productsApi";
 
-export default function Products() {
+import { CustomerDetailListOders } from "../../components/customer/customer-list-detailOrder";
 
-
+export default function DetailOrder() {
   return (
     <>
       <Head>
-        <title>Product</title>
+        <title>Detail Product</title>
       </Head>
       <Box
         component="main"
@@ -22,9 +20,9 @@ export default function Products() {
         }}
       >
         <Container maxWidth={false}>
-          <CustomerListToolbar titlePage="Product" />
+          <CustomerListToolbar titlePage="Detail Order" />
           <Box sx={{ mt: 3 }}>
-            <CustomerListProducts />
+            <CustomerDetailListOders />
           </Box>
         </Container>
       </Box>
@@ -32,4 +30,4 @@ export default function Products() {
   );
 }
 
-Products.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
+DetailOrder.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;

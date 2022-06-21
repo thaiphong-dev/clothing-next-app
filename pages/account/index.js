@@ -22,6 +22,10 @@ export default function Account() {
     const response = await userApi.getUserById(localStorage.getItem("userId"));
     setInfoUser(response);
     console.log(infoUser);
+    setFulln(response?.[0].fullname);
+    setAvatar(response?.[0].avatar);
+    setPhone(response?.[0].contact);
+    setAddr(response?.[0].address);
     setAvatar(response?.[0].avatar);
   };
   useEffect(() => {
@@ -32,8 +36,6 @@ export default function Account() {
     fullName: yup.string().required(),
     userName: yup.string().required(),
     email: yup.string().required(),
-    phone: yup.string().required(),
-    address: yup.string().required(),
   });
 
   const imageUpload = async (e) => {
@@ -71,7 +73,7 @@ export default function Account() {
   const UpdateUser = async () => {
     const payload = {
       fullname: fulln,
-      avatar: "",
+      avatar: avatar,
       username: infoUser[0]?.username,
       contact: phone,
       address: addr,
@@ -95,13 +97,14 @@ export default function Account() {
           <h1 style={{ display: "flex" }}>
             {avatar !== "" ? (
               <img
-                src="https://res.cloudinary.com/dxsta80ho/image/upload/v1655759888/thaiphong/o316lmxyr54wujghnzzh.jpg"
+                src={avatar}
                 alt="Avatar"
-                width={170}
-                height={170}
+                width={200}
+                height={200}
+                style={{ borderRadius: "50%" }}
               />
             ) : (
-              <h1>Dont Have Avatar {"            "}</h1>
+              <h1>Dont Have Avatar</h1>
             )}
             <input
               type="file"
@@ -186,7 +189,6 @@ export default function Account() {
                         name="email"
                         defaultValue={values.phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        isInvalid={touched.phone && !errors.phone}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.phone}
@@ -208,7 +210,6 @@ export default function Account() {
                         name="email"
                         defaultValue={values.address}
                         onChange={(e) => setAddr(e.target.value)}
-                        isInvalid={touched.address && !errors.address}
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.address}

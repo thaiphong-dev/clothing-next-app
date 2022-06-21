@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import logo1 from "./../../../public/images/icons/logo-01.png";
 import iconClose2 from "./../../../public/images/icons/icon-close2.png";
@@ -10,6 +10,7 @@ export default function Header() {
   const cartContext = useContext(cartItemsContext);
   const [scroll, setScroll] = useState("wrap-menu-desktop");
   const [activeMenu, setActiveMenu] = useState(1);
+  const [tokenhold, setTokenhold] = useState("");
   const scrolled = () => {
     if (window.pageYOffset > 85) {
       setScroll("wrap-menu-desktop active");
@@ -21,6 +22,15 @@ export default function Header() {
   React.useEffect(() => {
     window.addEventListener("scroll", scrolled);
   });
+
+  const deleteToken = () => {
+    localStorage.clear();
+  };
+
+  useEffect(() => {
+    setTokenhold(localStorage.getItem("token"));
+    console.log(tokenhold);
+  }, []);
 
   return (
     <div>
@@ -77,14 +87,27 @@ export default function Header() {
                   <Dropdown.Toggle variant="light" id="dropdown-basic">
                     <i className="zmdi zmdi-account zmdi-hc-lg" size="10px"></i>
                   </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="/account">Account</Dropdown.Item>
-                    <Dropdown.Item href="/yourorder">Your Order</Dropdown.Item>
-                    <Dropdown.Item href="/login" style={{ color: "red" }}>
-                      Log Out
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
+                  {tokenhold !== null ? (
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/account">Account</Dropdown.Item>
+                      <Dropdown.Item href="/yourorder">
+                        Your Order
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        href="/"
+                        style={{ color: "red" }}
+                        onClick={deleteToken}
+                      >
+                        Log Out
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  ) : (
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/login" style={{ color: "red" }}>
+                        Log In
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  )}
                 </Dropdown>
               </div>
             </nav>

@@ -23,6 +23,7 @@ function MyVerticallyCenteredModal(props) {
       setTotalPriceOrder(0);
       const response = await orderApi.getOrderByID(param);
       setDetailOrder(response.detail);
+      console.log(detailOrder);
       setTotalPriceOrder(
         response.detail.reduce(function (prev, current) {
           return prev + +current.totalPrice;

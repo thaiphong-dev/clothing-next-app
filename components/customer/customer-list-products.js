@@ -21,30 +21,104 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
+import { getInitials } from "../utils/get-initials";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 // import Modal from "react-modal";
-import ProductsApi from "src/api/productsApi";
+import ProductsApi from "../../public/api/productsApi";
 export const CustomerListProducts = ({ products, ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
-
   const handleClose = () => setOpen(false);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [listproduct, setListproduct] = useState([]);
+  const [idProduct, setIdProduct] = useState();
+  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState();
+  const [price, setPrice] = useState();
+  const [preview, setPreview] = useState();
+  const [detailProduct, setDetailproduct] = useState();
+  const fetchProductList = async () => {
+    try {
+      const param = {
+        page: "",
+        size: "",
+      };
+      const response = await ProductsApi.getAllProduct(param);
+      setListproduct(response.product);
+      console.log(response.product);
+    } catch (error) {
+      console.log("Loi : " + error);
+    }
+  };
+  useEffect(() => {
+    fetchProductList();
+  }, []);
 
   const handleOpen = (e) => {
-    console.log("click", e.key);
-    console.log("producs", products);
-    let selected = products?.filter((x) => x.id == e.key);
-    formik.setFieldValue("code", selected[0].id);
-    formik.setFieldValue("name", selected[0].name);
-    formik.setFieldValue("price", selected[0].price);
-    formik.setFieldValue("detailDescription", selected[0].detailDescription);
+    let selected = listproduct?.filter((x) => x._id == idProduct);
+    setDetailproduct(selected[0].productInfo);
+    setName(selected[0]?.productname);
+    setPrice(selected[0]?.price);
+    setPreview(selected[0]?.preview);
+    setAvatar(selected[0]?.image);
     setOpen(true);
+  };
+  const imageUpload = async (e) => {
+    console.log("called");
+    var fileIn = e.target;
+    var file = fileIn.files[0];
+    if (file && file.size < 5e6) {
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("upload_preset", "thaiphong");
+
+      try {
+        let res = await fetch(
+          "https://api.cloudinary.com/v1_1/dxsta80ho/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            e.preventDefault();
+            console.log(response.secure_url);
+            setAvatar(response.secure_url);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.error("oversized file");
+    }
+  };
+
+  const updateProductfunction = async () => {
+    const payload = {
+      productname: name,
+      price: price,
+      preview: preview,
+      image: avatar,
+      productType: "",
+      gender: 0,
+      productInfo: detailProduct,
+      status: 0,
+    };
+    console.log(payload);
+
+    try {
+      const response = await ProductsApi.updateProductById(idProduct, payload);
+      console.log("update", response);
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const router = useRouter();
   const formik = useFormik({
@@ -80,10 +154,10 @@ export const CustomerListProducts = ({ products, ...rest }) => {
       // login(e);
     },
   });
-  function handleMenuClick(e) {
-    // message.info("Click on menu item.");
-    setModalIsOpen(true);
-  }
+  const handleMenuClick = async (e) => {
+    const response = await ProductsApi.deleteProductById(idProduct);
+    fetchProductList();
+  };
 
   const menu = (
     <Menu
@@ -99,7 +173,7 @@ export const CustomerListProducts = ({ products, ...rest }) => {
           key: "2",
           icon: <DeleteOutlined />,
           style: { color: "red" },
-          onClick: { handleMenuClick },
+          onClick: handleMenuClick,
         },
       ]}
     />
@@ -140,15 +214,15 @@ export const CustomerListProducts = ({ products, ...rest }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products?.map((product) => (
+                {listproduct?.map((product, index) => (
                   <TableRow
                     hover
-                    key={product?.id}
+                    key={index}
                     selected={selectedCustomerIds.indexOf(product?.id) !== -1}
                   >
                     <TableCell>
-                      <Avatar src={product?.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(product?.name)}
+                      <Avatar src={product?.image} sx={{ mr: 2 }}>
+                        {getInitials(product?.productname)}
                       </Avatar>
                     </TableCell>
                     <TableCell>
@@ -159,20 +233,21 @@ export const CustomerListProducts = ({ products, ...rest }) => {
                         }}
                       >
                         <Typography color="textPrimary" variant="body1">
-                          {product?.name}
+                          {product?.productname}
                         </Typography>
                       </Box>
                     </TableCell>
                     <TableCell>{product?.price}</TableCell>
-                    <TableCell>{product?.detailDescription}</TableCell>
+                    <TableCell>{product?.preview}</TableCell>
                     <TableCell>
-                      <Dropdown overlay={menu} trigger={["click"]}>
-                        <a
-                          onClick={(e) => {
-                            e.preventDefault();
-                            console.log("value", e);
-                          }}
-                        >
+                      <Dropdown
+                        overlay={menu}
+                        trigger={["click"]}
+                        onClick={(e) => {
+                          setIdProduct(product?._id);
+                        }}
+                      >
+                        <a>
                           <MoreOutlined
                             style={{
                               border: "1px solid #d9d9d9",
@@ -214,65 +289,71 @@ export const CustomerListProducts = ({ products, ...rest }) => {
                 Update product
               </Typography>
             </Box>
+            <img
+              src={avatar}
+              alt="Avatar"
+              width={100}
+              height={100}
+              style={{ borderRadius: "50%", marginLeft: "35%" }}
+            ></img>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={imageUpload}
+              style={{ fontSize: "15px" }}
+            ></input>
 
             <TextField
-              error={Boolean(formik.touched.code && formik.errors.code)}
               fullWidth
-              helperText={formik.touched.code && formik.errors.code}
-              label="Code"
-              margin="normal"
-              name="code"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="text"
-              value={formik.values.code}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(formik.touched.name && formik.errors.name)}
-              fullWidth
-              helperText={formik.touched.name && formik.errors.name}
               label="Name"
               margin="normal"
               name="name"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => setName(e.target.value)}
               type="text"
-              value={formik.values.name}
+              value={name}
               variant="outlined"
             />
 
             <TextField
-              error={Boolean(formik.touched.price && formik.errors.price)}
               fullWidth
-              helperText={formik.touched.price && formik.errors.price}
               label="Price"
               margin="normal"
               name="price"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => setPrice(e.target.value)}
               type="text"
-              value={formik.values.price}
+              value={price}
               variant="outlined"
             />
             <TextField
-              error={Boolean(formik.touched.detailDescription && formik.errors.detailDescription)}
               fullWidth
-              helperText={formik.touched.detailDescription && formik.errors.detailDescription}
               label="Detail description"
               margin="normal"
               name="detailDescription"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => setPreview(e.target.value)}
               type="text"
-              value={formik.values.detailDescription}
+              value={preview}
               variant="outlined"
             />
             <Box sx={{ py: 2, ml: 16 }}>
-              <Button sx={{ mr: 2 }} color="primary" size="large" type="submit" variant="contained">
+              <Button
+                sx={{ mr: 2 }}
+                color="primary"
+                size="large"
+                type="submit"
+                variant="contained"
+                onClick={updateProductfunction}
+              >
                 Update
               </Button>
-              <Button color="primary" size="large" variant="contained" onClick={handleClose}>
+              <Button
+                color="primary"
+                size="large"
+                variant="contained"
+                onClick={handleClose}
+              >
                 close
               </Button>
             </Box>

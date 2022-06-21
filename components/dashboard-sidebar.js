@@ -5,48 +5,41 @@ import PropTypes from "prop-types";
 import { Box, Divider, Drawer, Typography, useMediaQuery } from "@mui/material";
 import { ShoppingBag as ShoppingBagIcon } from "../public/images/icons/shopping-bag";
 import { User as UserIcon } from "../public/images/icons/user";
-import { UserAdd as UserAddIcon } from "../public/images/icons/user-add";
 import { Users as UsersIcon } from "../public/images/icons/users";
 import { Logo } from "./logo";
 import { NavItem } from "./nav-item";
 import { DollarCircleOutlined, SkinOutlined } from "@ant-design/icons";
-
+import Button from "react-bootstrap/Button";
 const items = [
+  // {
+  //   href: "/customeradmin",
+  //   icon: <UsersIcon fontSize="small" />,
+  //   title: "Customers",
+  // },
   {
-    href: "/dashboard",
-    icon: <DollarCircleOutlined />,
-    title: "Revenue",
-  },
-  {
-    href: "/customers",
-    icon: <UsersIcon fontSize="small" />,
-    title: "Customers",
-  },
-  {
-    href: "/products",
+    href: "/productadmin",
     icon: <SkinOutlined />,
     title: "Products",
   },
 
   {
-    href: "/orders",
+    href: "/listorderadmin",
     icon: <ShoppingBagIcon fontSize="small" />,
     title: "Orders",
   },
   {
-    href: "/account",
+    href: "/accountadmin",
     icon: <UserIcon fontSize="small" />,
     title: "Account",
   },
 ];
-
 export const DashboardSidebar = (props) => {
-  const { open, onClose } = props;
   const router = useRouter();
-  const lgUp = useMediaQuery((theme) => theme?.breakpoints.up("lg"), {
-    defaultMatches: true,
-    noSsr: false,
-  });
+  const { open, onClose } = props;
+  // const lgUp = useMediaQuery((theme) => theme?.breakpoints.up("lg"), {
+  //   defaultMatches: true,
+  //   noSsr: false,
+  // });
 
   useEffect(
     () => {
@@ -100,6 +93,16 @@ export const DashboardSidebar = (props) => {
               title={item.title}
             />
           ))}
+          <Button
+            variant="danger"
+            style={{ marginLeft: "40px", marginTop: "20px" }}
+            onClick={() => {
+              localStorage.clear();
+              router.push("/login");
+            }}
+          >
+            Logout
+          </Button>
         </Box>
         <Divider sx={{ borderColor: "#2D3748" }} />
         <Box
@@ -112,24 +115,24 @@ export const DashboardSidebar = (props) => {
     </>
   );
 
-  if (lgUp) {
-    return (
-      <Drawer
-        anchor="left"
-        open
-        PaperProps={{
-          sx: {
-            backgroundColor: "neutral.900",
-            color: "#FFFFFF",
-            width: 280,
-          },
-        }}
-        variant="permanent"
-      >
-        {content}
-      </Drawer>
-    );
-  }
+  // if (lgUp) {
+  return (
+    <Drawer
+      anchor="left"
+      open
+      PaperProps={{
+        sx: {
+          backgroundColor: "neutral.900",
+          color: "#FFFFFF",
+          width: 280,
+        },
+      }}
+      variant="permanent"
+    >
+      {content}
+    </Drawer>
+  );
+  // }
 
   return (
     <Drawer
